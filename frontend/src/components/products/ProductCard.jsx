@@ -14,6 +14,7 @@ import {
   increment,
   addBookmark,
   removeBookmark,
+  
 } from "../../redux/slices/cartReducer";
 import CurrencyFormat from "react-currency-format";
 
