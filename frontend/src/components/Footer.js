@@ -1,7 +1,9 @@
 import React from "react";
 import { FaFacebookF, FaInstagram, FaWhatsapp } from "react-icons/fa";
+import { useSelector } from "react-redux";
 
 function Footer() {
+  const loggedIn = useSelector((state) => state.user.loggedIn);
   return (
     <footer className="z-50 relative w-full bottom-0 text-white bg-blue-400 py-5 sm:py-12">
       <div className="sm:flex mx-5 justify-between ">
@@ -35,11 +37,11 @@ function Footer() {
             </li>
           </ul>
         </div>
-        <div className="px-4 md:w-1/4 md:ml-auto mt-6 sm:mt-4 md:mt-0">
+        {!loggedIn && (<div className="px-4 md:w-1/4 md:ml-auto mt-6 sm:mt-4 md:mt-0">
           <button className="px-4 py-2 bg-gray-500 hover:bg-gray-700 rounded text-white">
             Buy with Us
           </button>
-        </div>
+        </div>)}
       </div>
     </footer>
   );

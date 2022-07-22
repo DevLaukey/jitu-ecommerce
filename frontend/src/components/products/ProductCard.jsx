@@ -14,7 +14,6 @@ import {
   increment,
   addBookmark,
   removeBookmark,
-  
 } from "../../redux/slices/cartReducer";
 import CurrencyFormat from "react-currency-format";
 
@@ -23,9 +22,8 @@ const ProductCard = ({ product }) => {
   const [cartAdded, setCartAdded] = React.useState(false);
   const [count, setCount] = React.useState(0);
   const [bookmark, setBookmark] = React.useState(false);
-  const [showModal, setShowModal] = React.useState()
-
-
+  const [showModal, setShowModal] = React.useState();
+  const inStock = product.inStock;
   // React.useState(useSelector((state) => state.cart.bookmarkCount));
 
   const price = 3900;
@@ -121,12 +119,14 @@ const ProductCard = ({ product }) => {
           </div>
         </div>
       </div>
-    )
+    );
   }
 
   return (
     <>
-      {showModal ? (<Modal showModal={showModal} setShowModal={setShowModal} />) : null}
+      {showModal ? (
+        <Modal showModal={showModal} setShowModal={setShowModal} />
+      ) : null}
       <div className="bg-white rounded-md px-4 py-2.5 my-2 mx-1 md:m-3 shadow-md shadow-zinc-400 flex flex-col justify-center items-center hover:shadow hover:shadow-blue-500">
         <div className="flex items-center self-end gap-x-3 z-40 mr-4">
           <span className="bg-blue-400 text-white p-1.5 rounded-md hover:bg-blue-600">
@@ -217,7 +217,8 @@ const ProductCard = ({ product }) => {
         ) : (
           <button
             onClick={addItems}
-            className="bg-blue-600 text-white capitalize w-full flex items-center justify-center gap-x-2 p-2 my-2 rounded-md hover:bg-blue-800 "
+            className="disabled:bg-blue-200 bg-blue-600 text-white capitalize w-full flex items-center justify-center gap-x-2 p-2 my-2 rounded-md hover:bg-blue-800 "
+            disabled={!product.inStock}
           >
             <span>
               <BsCartPlus />
