@@ -5,7 +5,7 @@ import Sidebar from "./components/admin/Sidebar";
 import ProductGrid from "./components/products/productGrid";
 import Slider from "./components/Slider/Slider";
 function App({ isAdmin }) {
-  return isAdmin ? (
+  return !isAdmin ? (
     <>
       <ToastContainer />
       <div className="flex ">

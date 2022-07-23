@@ -54,9 +54,10 @@ module.exports = {
     }
   },
   updateProducts: async function (req, res) {
-    const { imageUrl, productName, price, description, categoryId } = req.body;
+    const { imageUrl, productName, price, description, categoryId ,proddId} = req.body;
     try {
-      const product = await exec("update_products", {
+      const product = await exec("update_product", {
+        proddId,
         imageUrl,
         productName,
         price,
