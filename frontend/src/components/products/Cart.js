@@ -7,7 +7,6 @@ import CartProduct from "./CartProduct";
 
 function Cart() {
 	const { cart } = useSelector((state) => state.cart);
-	const totalPrice = 404040;
 	return (
 		<div className="container mx-auto ">
 			<div className="md:flex shadow-md my-2">
@@ -46,7 +45,12 @@ function Cart() {
 						<div className="flex font-semibold justify-between py-6 text-sm uppercase">
 							<span>Total cost</span>
 							<span>
-								<CurrencyFormat value={totalPrice} displayType={"text"} thousandSeparator={true} prefix={"Ksh"} />
+								<CurrencyFormat
+									value={cart?.reduce((acc, item) => acc + item.price * item.quantity, 0)}
+									displayType={"text"}
+									thousandSeparator={true}
+									prefix={"Ksh "}
+								/>
 							</span>
 						</div>
 						<button className="bg-blue-500 font-semibold hover:bg-indigo-600 py-3 text-sm text-white uppercase w-full">
