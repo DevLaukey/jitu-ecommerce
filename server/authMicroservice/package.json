@@ -19,6 +19,7 @@
     "jsonwebtoken": "^8.5.1",
     "jw-paginate": "^1.0.4",
     "mssql": "^8.1.2",
+    "nodemailer": "^6.7.7",
     "nodemon": "^2.0.19"
   }
 }

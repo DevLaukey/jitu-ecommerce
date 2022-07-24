@@ -7,7 +7,7 @@ Content-Type: application/json
 
 {
     "fullName": "Yahoo User",
-    "email": "localhostuser@yahoo.com",
+    "email": "laukeymwaura@gmail.com",
     "telephone": "0786547898",
     "password": "123456"
 }
