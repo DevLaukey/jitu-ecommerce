@@ -70,21 +70,38 @@ const ProductDetails = () => {
             </div>
           </div>
           <div class="flex justify-center mt-4">
-            <button
-              class="inline-flex text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded text-lg"
-              onClick={() => {
-                setBookmark(!bookmark);
-                if (bookmark === true) {
-                  dispatch(removeBookmark());
-                } else {
-                  dispatch(addBookmark());
-                }
-              }}
-            >
-              Add to Bookmarks
-            </button>
+            {bookmark ? (
+              <button
+                class="inline-flex text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded text-lg"
+                onClick={() => {
+                  setBookmark(!bookmark);
+                  if (bookmark === true) {
+                    dispatch(removeBookmark());
+                  } else {
+                    dispatch(addBookmark());
+                  }
+                }}
+              >
+                Remove from Bookmarks
+              </button>
+            ) : (
+              <button
+                class="inline-flex text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded text-lg"
+                onClick={() => {
+                  setBookmark(!bookmark);
+                  if (bookmark === true) {
+                    dispatch(removeBookmark());
+                  } else {
+                    dispatch(addBookmark());
+                  }
+                }}
+              >
+                Add to Bookmarks
+              </button>
+            )}
+
             {cartAdded ? (
-              <div className="ml-4 inline-flex items-center text-black-700 bg-blue-200 border-0 py-2 px-6 focus:outline-none hover:bg-gray-300 rounded text-lg space-x-3 " >
+              <div className="ml-4 inline-flex items-center text-black-700 bg-blue-200 border-0 py-2 px-6 focus:outline-none hover:bg-gray-300 rounded text-lg space-x-3 ">
                 <BsFillFileMinusFill
                   className="cursor-pointer hover:scale-x-150 mr-4"
                   onClick={removeItems}
