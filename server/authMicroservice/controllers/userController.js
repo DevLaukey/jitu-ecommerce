@@ -46,7 +46,8 @@ module.exports = {
 			res.status(500).json({
 				status: 500,
 				success: false,
-				message: error.message,
+				error: error.message,
+				message: "Failed. Please try again later",
 			});
 		}
 	},
@@ -93,7 +94,8 @@ module.exports = {
 			res.status(500).json({
 				status: 500,
 				success: false,
-				message: error.message,
+				error: error.message,
+				message: "Failed. Please try again later",
 			});
 		}
 	},
@@ -161,9 +163,8 @@ module.exports = {
 			const page = req.query.page || 1;
 			const size = req.query.size || 10;
 			const search = req.query.search || "";
-			
 
-			const result = await exec("customer_pagination", { page, size, search, });
+			const result = await exec("customer_pagination", { page, size, search });
 			const count = result.recordsets[1][0];
 
 			return res.status(201).json({
