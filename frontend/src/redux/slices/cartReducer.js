@@ -1,46 +1,54 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const cartSlice = createSlice({
-  name: "cart",
-  initialState: {
-    count: 0,
-    cartAdded: false,
-    bookmarkCount: 0,
-    itemsCount: 0,
-  },
-  reducers: {
-    itemsCountAdd: (state) => {
-      state.itemsCount++;
-    },
-	  itemsCountRemove: (state) => {
-     state.itemsCount >0 && state.itemsCount--;
-    },
-    addToCart: (state) => {
-      state.cartAdded = true;
-    },
-    increment: (state) => {
-      state.count++;
-    },
-    decrement: (state) => {
-      state.count--;
-    },
-    addBookmark: (state) => {
-      state.bookmarkCount++;
-    },
-    removeBookmark: (state) => {
-      state.bookmarkCount--;
-    },
-  },
+	name: "cart",
+	initialState: {
+		cart: [],
+		favorites: [],
+	},
+	reducers: {
+		addToCart: (state, action) => {
+			state.cart = [{ ...action.payload, quantity: 1 }, ...state.cart];
+		},
+		addItemQuantity: (state, action) => {
+			const newCart = state.cart.map((item) => {
+				if (item.productID === action.payload) item.quantity++;
+				return item;
+			});
+			state.cart = newCart;
+		},
+		minusItemQuantity: (state, action) => {
+			const newCart = state.cart.map((item) => {
+				if (item.productID === action.payload) item.quantity--;
+				return item;
+			});
+			state.cart = newCart;
+		},
+		removeFromCart: (state, action) => {
+			const newCart = state.cart.filter((item) => item.productID !== action.payload);
+			state.cart = newCart;
+		},
+		clearCart: (state) => {
+			state.cart = [];
+		},
+		addToFavorite: (state, action) => {
+			state.favorites = [action.payload, ...state.favorites];
+		},
+		removeFromFavorite: (state, action) => {
+			const newItems = state.favorites.filter((item) => item.productID !== action.payload);
+			state.favorites = newItems;
+		},
+	},
 });
 
 export const {
-  addToCart,
-  increment,
-  decrement,
-  addBookmark,
-  removeBookmark,
-  itemsCountAdd,
-  itemsCountRemove,
+	addToCart,
+	addItemQuantity,
+	minusItemQuantity,
+	removeFromCart,
+	clearCart,
+	addToFavorite,
+	removeFromFavorite,
 } = cartSlice.actions;
 
 export default cartSlice.reducer;

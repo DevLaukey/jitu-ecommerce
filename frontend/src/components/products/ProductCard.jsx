@@ -1,45 +1,47 @@
-import React from "react";
+import React, { useState } from "react";
+import CurrencyFormat from "react-currency-format";
+import { useDispatch, useSelector } from "react-redux";
+
+import { IoIosCloseCircle } from "react-icons/io";
 import { FiEye, FiHeart } from "react-icons/fi";
 import {
   BsCartPlus,
   BsFillFilePlusFill,
   BsFillFileMinusFill,
 } from "react-icons/bs";
-import { IoIosCloseCircle } from "react-icons/io";
 
-import { useDispatch } from "react-redux";
-// import Modal from "./Modal";
 import {
-  decrement,
-  increment,
-  addBookmark,
-  removeBookmark,
+  addToCart,
+  addToFavorite,
+  removeFromFavorite,
+  addItemQuantity,
+  minusItemQuantity,
+  removeFromCart,
 } from "../../redux/slices/cartReducer";
-import CurrencyFormat from "react-currency-format";
 
 const ProductCard = ({ product }) => {
+  const { cart, favorites } = useSelector(state => state.cart)
   const dispatch = useDispatch();
-  const [cartAdded, setCartAdded] = React.useState(false);
-  const [count, setCount] = React.useState(0);
-  const [bookmark, setBookmark] = React.useState(false);
-  const [showModal, setShowModal] = React.useState();
-  const inStock = product.inStock;
-  // React.useState(useSelector((state) => state.cart.bookmarkCount));
+  const [showModal, setShowModal] = useState();
+
+  const cartItem = cart?.find(item => item.productID === product.productID)
 
   const price = 3900;
+
   const removeItems = () => {
-    if (count > 1) {
-      setCount(count - 1);
-      dispatch(decrement());
+    if (cartItem?.quantity > 1) {
+      dispatch(minusItemQuantity(product.productID));
     } else {
-      setCartAdded(false);
+      dispatch(removeFromCart(product.productID));
     }
   };
-  const addItems = () => {
-    setCartAdded(true);
 
-    setCount(count + 1);
-    dispatch(increment());
+  const addItems = () => {
+    if (cartItem) {
+      dispatch(addItemQuantity(product.productID));
+    } else {
+      dispatch(addToCart(product));
+    }
   };
 
   function Modal() {
@@ -92,13 +94,13 @@ const ProductCard = ({ product }) => {
                   </p>
                 </span>
               </div>
-              {cartAdded ? (
+              {cartItem?.productID ? (
                 <div className="w-full mt-3 items-center flex justify-between bg-blue-600 text-white rounded-md font-light py-0.5 px-3 text-2xl">
                   <BsFillFileMinusFill
                     className="cursor-pointer hover:scale-x-150"
                     onClick={removeItems}
                   />
-                  {count}
+                  {cartItem?.quantity}
                   <BsFillFilePlusFill
                     className="cursor-pointer hover:scale-x-150"
                     onClick={addItems}
@@ -137,7 +139,7 @@ const ProductCard = ({ product }) => {
           </span>
           <span
             className={
-              bookmark
+              favorites?.find(item => item.productID === product.productID)?.productID
                 ? `bg-indigo-900 text-white p-1.5 rounded-md hover:bg-blue-600`
                 : `bg-blue-400 text-white p-1.5 rounded-md hover:bg-blue-600`
             }
@@ -145,11 +147,10 @@ const ProductCard = ({ product }) => {
             <FiHeart
               className="hover:cursor-pointer"
               onClick={() => {
-                setBookmark(!bookmark);
-                if (bookmark === true) {
-                  dispatch(removeBookmark());
+                if (favorites?.find(item => item.productID === product.productID)?.productID) {
+                  dispatch(removeFromFavorite(product.productID));
                 } else {
-                  dispatch(addBookmark());
+                  dispatch(addToFavorite(product));
                 }
               }}
             />
@@ -202,13 +203,13 @@ const ProductCard = ({ product }) => {
             </p>
           </span>
         </div>
-        {cartAdded ? (
+        {cartItem?.productID ? (
           <div className="w-full mt-3 items-center flex justify-between bg-blue-600 text-white rounded-md font-light py-0.5 px-3 text-2xl">
             <BsFillFileMinusFill
               className="cursor-pointer hover:scale-x-150"
               onClick={removeItems}
             />
-            {count}
+            {cartItem?.quantity}
             <BsFillFilePlusFill
               className="cursor-pointer hover:scale-x-150"
               onClick={addItems}
