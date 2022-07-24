@@ -27,6 +27,7 @@ import Bookmark from "./components/products/Bookmark";
 import Error from "./components/Error";
 
 import ProtectedRoutes from "./ProtectedRoutes/ProtectedRoutes";
+import ProductDetails from "./components/products/ProductDetails";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
@@ -47,6 +48,8 @@ root.render(
 					</Route>
 					<Route path="/cart" element={<Cart />} />
 					<Route path="/bookmark" element={<Bookmark />} />
+					<Route path="/products/:productName" element={<ProductDetails />} />
+
 				</Route>
 
 				<Route path="/login" element={<Login />} />

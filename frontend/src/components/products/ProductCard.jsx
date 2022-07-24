@@ -6,9 +6,8 @@ import {
   BsFillFileMinusFill,
 } from "react-icons/bs";
 import { IoIosCloseCircle } from "react-icons/io";
-
+import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
-// import Modal from "./Modal";
 import {
   decrement,
   increment,
@@ -23,7 +22,6 @@ const ProductCard = ({ product }) => {
   const [count, setCount] = React.useState(0);
   const [bookmark, setBookmark] = React.useState(false);
   const [showModal, setShowModal] = React.useState();
-  const inStock = product.inStock;
   // React.useState(useSelector((state) => state.cart.bookmarkCount));
 
   const price = 3900;
@@ -53,12 +51,16 @@ const ProductCard = ({ product }) => {
             <IoIosCloseCircle />
           </button>
           <div className="grid grid-cols-2 gap-3">
-            <div className="col-span-1">
-              <img
-                src={product.imageUrl}
-                alt={product.productName}
-                className="w-max h-full rounded"
-              />
+            <div className="hover:cursor-pointer col-span-1">
+              <Link
+                to={`/products/${product.productName}`}
+              >
+                <img
+                  src={product.imageUrl}
+                  alt={product.productName}
+                  className="w-max h-full rounded"
+                />
+              </Link>
             </div>
             <div className="col-span-1 space-y-4 md:flex-col md:gap-y-6 sm:flex sm:space-y-0 sm:space-x-4 relative">
               <p className="text-zinc-900 mt-2 font-semibold capitalize">
@@ -156,11 +158,13 @@ const ProductCard = ({ product }) => {
           </span>
         </div>
         <div className="w-full mt-[-20px] z-30">
-          <img
-            src={product.imageUrl}
-            alt={product.productName}
-            className="w-max h-[180px] rounded"
-          />
+          <Link to={`/products/${product.productName}`}>
+            <img
+              src={product.imageUrl}
+              alt={product.productName}
+              className="w-max h-full rounded"
+            />
+          </Link>
         </div>
         <div className="justify-between  flex-wrap">
           <p className="text-zinc-900 mt-1.5 font-semibold capitalize">

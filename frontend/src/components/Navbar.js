@@ -30,7 +30,6 @@ function Navbar() {
       
     });
   }, []);
-  console.log(categories);
   
   return (
     <header className="text-white flex sticky z-50 top-0 left-0 right-0 space-x-4 items-center justify-between align-middle w-full  p-4 bg-blue-400">

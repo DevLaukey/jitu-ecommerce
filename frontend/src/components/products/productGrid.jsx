@@ -8,7 +8,6 @@ const ProductGrid = () => {
 
   const search = useSelector((state) => state.product.searchQuery);
   // search === false && search = "";
-  console.log(search);
   const page = 1;
   const size = 3;
   const baseURL = "http://localhost:3005";
