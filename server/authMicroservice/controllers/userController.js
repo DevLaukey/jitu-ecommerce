@@ -4,7 +4,6 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 
 // ToDO
-// Send email to user after login
 // reset password
 
 module.exports = {
@@ -74,15 +73,14 @@ module.exports = {
 
         const token = jwt.sign({ email: user.email }, process.env.JWTKEY, {
           expiresIn: "1h",
-		});
-		  loginEmail(email)
+        });
+
         return res.status(201).json({
           status: 201,
           success: true,
           message: "logged in successfully",
           token,
-		});
-		  
+        });
       } else {
         return res.status(401).json({
           status: 401,
