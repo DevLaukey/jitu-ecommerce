@@ -1,5 +1,5 @@
 
-GET http://localhost:3016/users?page=1&size=3&search=pa
+GET http://localhost:3016/users?page=1&size=3&search=''
 
 ###
 POST http://localhost:3016/signup
@@ -17,12 +17,21 @@ POST  http://localhost:3016/signin
 Content-Type: application/json
 
 {
-    "email": "localhostuser@yahoo.com",
+    "email": "laukeymwaura@gmail.com",
     "password": "123456"
 }
 
 ###
+POST  http://localhost:3016/admin
+Content-Type: application/json
+
+{
+    "email": "laukeymwaura@gmail.com"
+}
+
+###
 GET http://localhost:3005/categories
+
 
 ###
 POST http://localhost:3005/add-category
@@ -48,7 +57,7 @@ GET http://localhost:3005/products
 ###
 GET http://localhost:3005/products?page=1&size=3&search=pa
 ###
-post http://localhost:3005/edit-product
+post http://localhost:3005/add-product
 Content-Type: application/json
 
 {
@@ -57,7 +66,7 @@ Content-Type: application/json
     "productName":"Leather 3-seater",
     "price":"45500",
     "description":"Leather 3-seater with posh hand rests",
-    "categoryId": 2
+    "categoryId": 1
 }
 
 ###

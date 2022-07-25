@@ -5,7 +5,7 @@ import { useSelector } from "react-redux";
 function Footer() {
   const loggedIn = useSelector((state) => state.user.loggedIn);
   return (
-    <footer className="z-50 relative w-full bottom-0 text-white bg-blue-400 py-5 sm:py-12">
+    <footer className="z-40 relative w-full bottom-0 text-white bg-blue-400 py-5 sm:py-12">
       <div className="sm:flex mx-5 justify-between ">
         <div className="sm:w-full px-4 md:w-1/6">
           <strong>Products</strong>

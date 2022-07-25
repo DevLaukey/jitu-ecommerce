@@ -6,8 +6,7 @@ CREATE TABLE Users
     telephone VARCHAR(20),
     [password] VARCHAR(255),
     [role] BIT DEFAULT 0,
-    isActive BIT DEFAULT 0,
-    isDeleted BIT DEFAULT 0,
+
 )
 GO
 
@@ -49,3 +48,7 @@ CREATE TABLE Order_Product
     Quantity INT NOT NULL DEFAULT 1,
 )
 GO
+
+
+
+
