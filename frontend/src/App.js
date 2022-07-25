@@ -44,9 +44,9 @@ const App = () => {
 		<Router>
 			<ToastContainer />
 			<Navbar />
-			<Slider />
 			<Routes>
 				{/* <Route path="/" element={<ProtectedRoutes />}> */}
+
 				<Route path="/" element={<ProductGrid />} />
 				<Route path="/cart" element={<Cart />} />
 				<Route path="/bookmark" element={<Bookmark />} />
