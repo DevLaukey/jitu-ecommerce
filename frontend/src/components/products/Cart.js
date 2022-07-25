@@ -54,7 +54,9 @@ function Cart() {
 								/>
 							</span>
 						</div>
-						<button className="bg-blue-500 font-semibold hover:bg-indigo-600 py-3 text-sm text-white uppercase w-full">
+						<button
+							onClick={() => console.log("checkout")}
+							className="bg-blue-500 font-semibold hover:bg-indigo-600 py-3 text-sm text-white uppercase w-full">
 							Checkout
 						</button>
 					</div>

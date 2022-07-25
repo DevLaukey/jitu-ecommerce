@@ -85,18 +85,22 @@ function Navbar() {
 					<Link to="/bookmark">
 						<BsHeart className="text-xl" />
 					</Link>
-					<div className="text-white bg-zinc-800 w-5 h-5 p-1 flex items-center justify-center relative -left-0.5 -top-3 text-xs rounded-full">
-						{favorites.reduce((acc, item) => acc + 1, 0)}
-					</div>
+					{favorites.length > 0 && (
+						<div className="text-white bg-zinc-800 w-5 h-5 p-1 flex items-center justify-center relative -left-0.5 -top-3 text-xs rounded-full">
+							{favorites.reduce((acc, item) => acc + 1, 0)}
+						</div>
+					)}
 				</div>
 
 				<div className="text-gray-200 flex  text-center whitespace-nowrap rounded">
 					<Link to="/cart">
 						<BsCart2 className="text-2xl " />
 					</Link>
-					<div className="text-white bg-zinc-800 w-auto h-5 p-1 flex items-center justify-center relative -left-2 -top-3 text-xs rounded-full">
-						{cart.map((item) => (item.quantity > 0 ? 1 : 0)).reduce((acc, item) => acc + item, 0)}
-					</div>
+					{cart.length > 0 && (
+						<div className="text-white bg-zinc-800 w-auto h-5 p-1 flex items-center justify-center relative -left-2 -top-3 text-xs rounded-full">
+							{cart.map((item) => (item.quantity > 0 ? 1 : 0)).reduce((acc, item) => acc + item, 0)}
+						</div>
+					)}
 				</div>
 
 				<div onClick={() => setToggle(!toggle)} className="dropdown flex relative">

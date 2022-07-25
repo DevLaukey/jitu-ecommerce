@@ -20,7 +20,7 @@ import AdminWrapper from "./pages/AdminWrapper";
 import Login from "./components/logins/Login";
 import SignUp from "./components/logins/SignUp";
 import Slider from "./components/Slider";
-import { getProduct, loadCategories, loadProducts } from "./redux/slices/productReducer";
+import { loadCategories, loadProducts } from "./redux/slices/productReducer";
 import axios from "axios";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
@@ -30,7 +30,6 @@ const App = () => {
 	const dispatch = useDispatch();
 
 	const baseURL = "http://localhost:3005";
-	const { productName } = useParams();
 
 	useEffect(() => {
 		axios.get(`${baseURL}/categories`).then((response) => {
@@ -39,18 +38,15 @@ const App = () => {
 		axios.get(`${baseURL}/products`).then((response) => {
 			dispatch(loadProducts(response.data.records));
 		});
-		// axios.get(`${baseURL}/products?page=1&size=1&search=${productName}`).then((response) => {
-		// 	dispatch(getProduct(response.data.records[0]));
-		// });
 	}, [dispatch]);
 
 	return (
 		<Router>
 			<ToastContainer />
 			<Navbar />
-			<Slider />
 			<Routes>
 				{/* <Route path="/" element={<ProtectedRoutes />}> */}
+
 				<Route path="/" element={<ProductGrid />} />
 				<Route path="/cart" element={<Cart />} />
 				<Route path="/bookmark" element={<Bookmark />} />
