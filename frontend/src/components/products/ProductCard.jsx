@@ -149,7 +149,7 @@ const ProductCard = ({ product }) => {
 						<p className="text-xl font-semibold">
 							<CurrencyFormat value={product?.price} displayType={"text"} thousandSeparator={true} prefix={"Ksh"} />
 						</p>
-						<p className="bg-zinc-200 px-1.5 rounded-sm  text-zinc-600">{discount}</p>
+						<p className="bg-zinc-200 px-1.5 rounded-sm  text-zinc-600">-{discount}%</p>
 					</span>
 					<span>
 						<p className="line-through text-zinc-400 p-1.5 self-start">

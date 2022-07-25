@@ -1,4 +1,9 @@
-import { BrowserRouter as Router, Route, Routes, useParams } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Route,
+  Routes,
+  useParams,
+} from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import ProductGrid from "./components/products/productGrid";
@@ -19,59 +24,65 @@ import Error from "./components/Error";
 import AdminWrapper from "./pages/AdminWrapper";
 import Login from "./components/logins/Login";
 import SignUp from "./components/logins/SignUp";
-import Slider from "./components/Slider";
 import { loadCategories, loadProducts } from "./redux/slices/productReducer";
 import axios from "axios";
 import { useEffect } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import ProductDetails from "./components/products/ProductDetails";
+import ProtectedRoutes from "./ProtectedRoutes/ProtectedRoutes";
+import { makeAdmin } from "./redux/slices/userReducer"
 
 const App = () => {
-	const dispatch = useDispatch();
+  const dispatch = useDispatch();
+const email = "laukeymwaura@tangerinefurn.com";
+  let { isAdmin } =useSelector((state) => state.user);
+  const baseURL = "http://localhost:3005";
 
-	const baseURL = "http://localhost:3005";
+  useEffect(() => {
+    axios.get(`${baseURL}/categories`).then((response) => {
+      dispatch(loadCategories(response.data.categories));
+    });
+    axios.get(`${baseURL}/products`).then((response) => {
+      dispatch(loadProducts(response.data.records));
+    });
+    axios
+      .post(`http://localhost:3016/admin`,{email})
+      .then((response) => {
+        console.log(response.data.data[0].role);
+        response.data.data[0].role && dispatch(makeAdmin());
+      });
+  }, []);
 
-	useEffect(() => {
-		axios.get(`${baseURL}/categories`).then((response) => {
-			dispatch(loadCategories(response.data.categories));
-		});
-		axios.get(`${baseURL}/products`).then((response) => {
-			dispatch(loadProducts(response.data.records));
-		});
-		const localStorage = (() => {
-			const fieldValue = localStorage.getItem("user");
-			return fieldValue === null ? [] : JSON.parse(fieldValue);
-		})();
-	}, [dispatch]);
+  return (
+    <Router>
+      <ToastContainer />
+      <Navbar />
+      <Routes>
+        {isAdmin ? (
+          <Route path="/" element={<AdminWrapper />}>
+            <Route path="/" element={<DashBoard />} />
+            <Route path="admin/customers" element={<Customers />} />
+            <Route path="admin/products" element={<Products />} />
+            <Route path="admin/orders" element={<Orders />} />
+            <Route path="admin/messages" element={<Messages />} />
+            <Route path="admin/settings" element={<Settings />} />
+          </Route>
+        ) : (
+          <>
+            <Route path="/" element={<ProductGrid />} />
+            <Route path="/cart" element={<Cart />} />
+            <Route path="/bookmark" element={<Bookmark />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/signup" element={<SignUp />} />
+            <Route path="/products/:productName" element={<ProductDetails />} />
+          </>
+        )}
 
-	return (
-		<Router>
-			<ToastContainer />
-			<Navbar />
-			<Routes>
-				{/* <Route path="/" element={<ProtectedRoutes />}> */}
-
-				<Route path="/" element={<ProductGrid />} />
-				<Route path="/cart" element={<Cart />} />
-				<Route path="/bookmark" element={<Bookmark />} />
-				<Route path="/login" element={<Login localStorage={localStorage} />} />
-				<Route path="/signup" element={<SignUp />} />
-				<Route path="/products/:productName" element={<ProductDetails />} />
-
-				<Route path="/admin" element={<AdminWrapper />}>
-					<Route index element={<DashBoard />} />
-					<Route path="customers" element={<Customers />} />
-					<Route path="products" element={<Products />} />
-					<Route path="orders" element={<Orders />} />
-					<Route path="messages" element={<Messages />} />
-					<Route path="settings" element={<Settings />} />
-				</Route>
-
-				<Route path="*" element={<Error />} />
-			</Routes>
-			<Footer />
-		</Router>
-	);
+        <Route path="*" element={<Error />} />
+      </Routes>
+      <Footer />
+    </Router>
+  );
 };
 
 export default App;
