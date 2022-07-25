@@ -9,31 +9,32 @@ import "swiper/css/scrollbar";
 import App from "./App";
 import { store } from "./redux/store";
 import { Provider } from "react-redux";
-import Login from "./components/logins/Login";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import SignUp from "./components/logins/SignUp";
+// import Login from "./components/logins/Login";
+// import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+// import SignUp from "./components/logins/SignUp";
 
-import Navbar from "./components/Navbar";
-import Footer from "./components/Footer";
+// import Navbar from "./components/Navbar";
+// import Footer from "./components/Footer";
 
-import DashBoard from "./components/admin/Main";
-import Customers from "./components/admin/Customers";
-import Products from "./components/admin/Products";
-import Orders from "./components/admin/Order";
-import Messages from "./components/admin/Messages";
-import Settings from "./components/admin/Settings";
-import Cart from "./components/products/Cart";
-import Bookmark from "./components/products/Bookmark";
-import Error from "./components/Error";
+// import DashBoard from "./components/admin/Main";
+// import Customers from "./components/admin/Customers";
+// import Products from "./components/admin/Products";
+// import Orders from "./components/admin/Order";
+// import Messages from "./components/admin/Messages";
+// import Settings from "./components/admin/Settings";
+// import Cart from "./components/products/Cart";
+// import Bookmark from "./components/products/Bookmark";
+// import Error from "./components/Error";
 
-import ProtectedRoutes from "./ProtectedRoutes/ProtectedRoutes";
-import ProductDetails from "./components/products/ProductDetails";
+// import ProtectedRoutes from "./ProtectedRoutes/ProtectedRoutes";
+// import ProductDetails from "./components/products/ProductDetails";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
 root.render(
 	<Provider store={store}>
-		<Router>
+		<App />
+		{/* <Router>
 			<Navbar />
 
 			<Routes>
@@ -58,6 +59,6 @@ root.render(
 				<Route path="*" element={<Error />} />
 			</Routes>
 			<Footer />
-		</Router>
+		</Router> */}
 	</Provider>
 );

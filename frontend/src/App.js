@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import { BrowserRouter as Router, Route, Routes, useParams } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import ProductGrid from "./components/products/productGrid";
@@ -19,15 +19,18 @@ import Error from "./components/Error";
 import AdminWrapper from "./pages/AdminWrapper";
 import Login from "./components/logins/Login";
 import SignUp from "./components/logins/SignUp";
-import { loadCategories, loadProducts } from "./redux/slices/productReducer";
+import Slider from "./components/Slider";
+import { getProduct, loadCategories, loadProducts } from "./redux/slices/productReducer";
 import axios from "axios";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
+import ProductDetails from "./components/products/ProductDetails";
 
 const App = () => {
 	const dispatch = useDispatch();
 
 	const baseURL = "http://localhost:3005";
+	const { productName } = useParams();
 
 	useEffect(() => {
 		axios.get(`${baseURL}/categories`).then((response) => {
@@ -36,17 +39,16 @@ const App = () => {
 		axios.get(`${baseURL}/products`).then((response) => {
 			dispatch(loadProducts(response.data.records));
 		});
+		// axios.get(`${baseURL}/products?page=1&size=1&search=${productName}`).then((response) => {
+		// 	dispatch(getProduct(response.data.records[0]));
+		// });
 	}, [dispatch]);
 
 	return (
-		// <>
-		// 	<Slider />
-		// 	<ProductGrid />
-		// </>
-
 		<Router>
 			<ToastContainer />
 			<Navbar />
+			<Slider />
 			<Routes>
 				{/* <Route path="/" element={<ProtectedRoutes />}> */}
 				<Route path="/" element={<ProductGrid />} />
@@ -54,6 +56,7 @@ const App = () => {
 				<Route path="/bookmark" element={<Bookmark />} />
 				<Route path="/login" element={<Login />} />
 				<Route path="/signup" element={<SignUp />} />
+				<Route path="/products/:productName" element={<ProductDetails />} />
 
 				<Route path="/admin" element={<AdminWrapper />}>
 					<Route index element={<DashBoard />} />
