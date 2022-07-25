@@ -17,8 +17,16 @@ POST  http://localhost:3016/signin
 Content-Type: application/json
 
 {
-    "email": "localhostuser@yahoo.com",
+    "email": "laukeymwaura@gmail.com",
     "password": "123456"
+}
+
+###
+POST  http://localhost:3016/admin
+Content-Type: application/json
+
+{
+    "email": "laukeymwaura@gmail.com"
 }
 
 ###

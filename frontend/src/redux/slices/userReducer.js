@@ -5,20 +5,25 @@ const userSlice = createSlice({
   initialState: {
     loggedIn: false,
     profileUpdated: '',
+    isAdmin: false,
   },
   reducers: {
     loginUser: (state) => {
       state.loggedIn = true;
     },
-    addProfile: (state, {payload}) => {
+    addProfile: (state, { payload }) => {
       state.profileUpdated = payload
+    },
+    makeAdmin: (state) => {
+      state.isAdmin = true;
     }
   },
 });
 
 export const {
   loginUser,
-  addProfile
+  addProfile,
+  makeAdmin
 } = userSlice.actions;
 
 export default userSlice.reducer;

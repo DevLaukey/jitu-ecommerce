@@ -27,13 +27,15 @@ import SignUp from "./components/logins/SignUp";
 import { loadCategories, loadProducts } from "./redux/slices/productReducer";
 import axios from "axios";
 import { useEffect } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import ProductDetails from "./components/products/ProductDetails";
 import ProtectedRoutes from "./ProtectedRoutes/ProtectedRoutes";
+import { makeAdmin } from "./redux/slices/userReducer"
 
 const App = () => {
   const dispatch = useDispatch();
 
+  let {isAdmin} = useSelector((state)=> state.user);
   const baseURL = "http://localhost:3005";
 
   useEffect(() => {
@@ -43,6 +45,9 @@ const App = () => {
     axios.get(`${baseURL}/products`).then((response) => {
       dispatch(loadProducts(response.data.records));
     });
+    axios.post(`http://localhost:3016/admin`).then((response) => {
+     dispatch(makeAdmin(response.data.role));
+    });
   }, [dispatch]);
 
   return (
@@ -50,23 +55,25 @@ const App = () => {
       <ToastContainer />
       <Navbar />
       <Routes>
-        {/* <Route path="/" element={<ProtectedRoutes />}> */}
-
-        <Route path="/" element={<ProductGrid />} />
-        <Route path="/cart" element={<Cart />} />
-        <Route path="/bookmark" element={<Bookmark />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/signup" element={<SignUp />} />
-        <Route path="/products/:productName" element={<ProductDetails />} />
-
-        <Route path="/admin" element={<AdminWrapper />}>
-          <Route path="dashboard" element={<DashBoard />} />
-          <Route path="customers" element={<Customers />} />
-          <Route path="products" element={<Products />} />
-          <Route path="orders" element={<Orders />} />
-          <Route path="messages" element={<Messages />} />
-          <Route path="settings" element={<Settings />} />
-        </Route>
+        {isAdmin ? (
+          <Route path="/" element={<AdminWrapper />}>
+            <Route path="admin/dashboard" element={<DashBoard />} />
+            <Route path="admin/customers" element={<Customers />} />
+            <Route path="admin/products" element={<Products />} />
+            <Route path="admin/orders" element={<Orders />} />
+            <Route path="admin/messages" element={<Messages />} />
+            <Route path="admin/settings" element={<Settings />} />
+          </Route>
+        ) : (
+          <>
+            <Route path="/" element={<ProductGrid />} />
+            <Route path="/cart" element={<Cart />} />
+            <Route path="/bookmark" element={<Bookmark />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/signup" element={<SignUp />} />
+            <Route path="/products/:productName" element={<ProductDetails />} />
+          </>
+        )}
 
         <Route path="*" element={<Error />} />
       </Routes>

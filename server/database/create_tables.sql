@@ -4,11 +4,9 @@ CREATE TABLE Users
     fullName VARCHAR(100),
     email VARCHAR(100),
     telephone VARCHAR(20),
-    profileUrl VARCHAR(255),
     [password] VARCHAR(255),
     [role] BIT DEFAULT 0,
-    isActive BIT DEFAULT 0,
-    isDeleted BIT DEFAULT 0,
+
 )
 GO
 
@@ -50,3 +48,7 @@ CREATE TABLE Order_Product
     Quantity INT NOT NULL DEFAULT 1,
 )
 GO
+
+
+
+
