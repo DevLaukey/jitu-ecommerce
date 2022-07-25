@@ -8,18 +8,17 @@ const jwt = require("jsonwebtoken");
 
 module.exports = {
   makeAdmin: async (req, res) => {
-    const { email} = req.body;
+    const { email } = req.body;
     try {
-       await exec("verify_exists", {
-         email,
-       }).then(
-         response => (
-           console.log(response.recordset),
-          res.status(200).json({
-            status: 200,
-            success: true,
-            data: response.recordset
-        }))
+      await exec("verify_exists", {
+        email,
+      }).then(
+        (response) =>{ console.log(response.recordset),
+        res.status(200).json({
+          status: 200,
+          success: true,
+          data: response.recordset,
+        })}
       );
     } catch (error) {
       console.log(error.message);

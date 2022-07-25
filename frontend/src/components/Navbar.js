@@ -4,15 +4,17 @@ import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { searchQuery } from "../redux/slices/productReducer";
 import ImageModal from "./user/ImageModal";
+import { logoutUser } from "../redux/slices/userReducer";
 
 function Navbar() {
   const dispatch = useDispatch();
   const [toggle, setToggle] = useState(false);
-const [showModal, setShowModal] = useState(false);
+  const [showModal, setShowModal] = useState(false);
   const [searchInput, setSearchInput] = useState(false);
   const { categories } = useSelector((state) => state.product);
   const { cart, favorites } = useSelector((state) => state.cart);
   const { profileUpdated } = useSelector((state) => state.user);
+  const { loggedIn } = useSelector((state) => state.user);
   const search = () => {
     dispatch(searchQuery(searchInput));
   };
@@ -135,23 +137,37 @@ const [showModal, setShowModal] = useState(false);
               toggle ? "  text-gray-700 right-0 mr-3 mt-12 fixed " : "hidden"
             }
           >
-            <li classNames="">
-              <Link
-                to="/Login"
+            {loggedIn ? (
+              <p
+                onClick={() => {
+                  dispatch(logoutUser());
+                }}
                 className="rounded-t  text-white bg-blue-400 hover:bg-gray-400 py-2 px-4 block whitespace-no-wrap"
               >
-                Log in
-              </Link>
-            </li>
-            <li className="">
-              <Link
-                to="/signup"
-                className=" text-white bg-blue-400 hover:bg-gray-400 py-2 px-4 block whitespace-no-wrap"
-              >
-                Register
-              </Link>
-            </li>
-            <li className="">
+                Log out
+              </p>
+            ) : (
+              <li classNames="">
+                <Link
+                  to="/Login"
+                  className="rounded-t  text-white bg-blue-400 hover:bg-gray-400 py-2 px-4 block whitespace-no-wrap"
+                >
+                  Log in
+                </Link>
+              </li>
+            )}
+
+            {!loggedIn && (
+              <li className="">
+                <Link
+                  to="/signup"
+                  className=" text-white bg-blue-400 hover:bg-gray-400 py-2 px-4 block whitespace-no-wrap"
+                >
+                  Register
+                </Link>
+              </li>
+            )}
+          { loggedIn && (<li className="">
               <p
                 className="rounded-b  text-white bg-blue-400 hover:bg-gray-400 py-2 px-4 block whitespace-no-wrap"
                 onClick={() => {
@@ -160,11 +176,13 @@ const [showModal, setShowModal] = useState(false);
               >
                 Update Profile
               </p>
-            </li>
+            </li>)}
           </ul>
         </div>
       </div>
-      {showModal &&  (<ImageModal showModal={showModal} setShowModal={setShowModal} /> )}
+      {showModal && (
+        <ImageModal showModal={showModal} setShowModal={setShowModal} />
+      )}
     </header>
   );
 }

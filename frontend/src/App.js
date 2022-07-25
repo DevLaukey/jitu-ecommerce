@@ -34,8 +34,8 @@ import { makeAdmin } from "./redux/slices/userReducer"
 
 const App = () => {
   const dispatch = useDispatch();
-
-  let {isAdmin} = useSelector((state)=> state.user);
+const email = "laukeymwaura@tangerinefurn.com";
+  let { isAdmin } =useSelector((state) => state.user);
   const baseURL = "http://localhost:3005";
 
   useEffect(() => {
@@ -45,10 +45,13 @@ const App = () => {
     axios.get(`${baseURL}/products`).then((response) => {
       dispatch(loadProducts(response.data.records));
     });
-    axios.post(`http://localhost:3016/admin`).then((response) => {
-     dispatch(makeAdmin(response.data.role));
-    });
-  }, [dispatch]);
+    axios
+      .post(`http://localhost:3016/admin`,{email})
+      .then((response) => {
+        console.log(response.data.data[0].role);
+        response.data.data[0].role && dispatch(makeAdmin());
+      });
+  }, []);
 
   return (
     <Router>
@@ -57,7 +60,7 @@ const App = () => {
       <Routes>
         {isAdmin ? (
           <Route path="/" element={<AdminWrapper />}>
-            <Route path="admin/dashboard" element={<DashBoard />} />
+            <Route path="/" element={<DashBoard />} />
             <Route path="admin/customers" element={<Customers />} />
             <Route path="admin/products" element={<Products />} />
             <Route path="admin/orders" element={<Orders />} />
