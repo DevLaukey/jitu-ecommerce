@@ -25,7 +25,7 @@ const Customers = () => {
         rows = response.data.records.length;
         setCustomers(response.data.records);
       });
-  }, [searchInput, user]);
+  }, [searchInput]);
 
   // function ViewCustomer() {
   // 	return (
@@ -48,6 +48,7 @@ const Customers = () => {
   // 		</>
   // 	);
   // }
+console.log(user)
   return (
     <>
       <div className="m-4 relative  w-full">
@@ -81,7 +82,7 @@ const Customers = () => {
           </div>
         </div>
         {showModal && <AdminModal setShowModal={setShowModal} />}
-        {viewModal && <EditModal setViewModal={setViewModal} user={user} />}
+        {viewModal && <EditModal setViewModal={setViewModal} email={user} />}
         <div className="flex flex-col">
           <div className="overflow-x-auto sm:-mx-6 lg:-mx-8 max-w-full">
             <div className="py-2 inline-block min-w-full sm:px-6 lg:px-8">
