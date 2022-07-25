@@ -316,3 +316,37 @@ BEGIN
 END
 GO
 
+
+CREATE or ALTER PROCEDURE [dbo].[create_order](
+    @userid INT,
+    @id VARCHAR(100),
+    @totalamount DECIMAL(12,2) = 0
+)
+AS
+BEGIN
+    INSERT INTO Orders
+        (OrderId, UserId)
+    VALUES
+        (@id, @userid)
+END
+GO
+
+create or alter  proc [dbo].[createorderdetails](
+    @json NVARCHAR(1000)
+)
+AS
+BEGIN
+
+    INSERT INTO Order_Product
+        (OrderId,ProductId,UnitPrice,Quantity)
+
+    SELECT OrderID, ProductId, UnitPrice, Quantity
+    FROM OPENJSON(@json)
+    WITH(
+        OrderId VARCHAR(100) '$.OrderID',
+        ProductId INT '$.ProductID',
+        UnitPrice DECIMAL(12, 2) '$.UnitPrice',
+        Quantity INT '$.Quantity'
+    ) AS jsonValues
+
+END

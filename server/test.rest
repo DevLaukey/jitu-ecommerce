@@ -1,5 +1,5 @@
 
-GET http://localhost:3016/users?page=1&size=3&search=''
+GET http://localhost:3016/users?page=1&size=3&search=pa
 
 ###
 POST http://localhost:3016/signup
@@ -17,21 +17,12 @@ POST  http://localhost:3016/signin
 Content-Type: application/json
 
 {
-    "email": "laukeymwaura@gmail.com",
+    "email": "localhostuser@yahoo.com",
     "password": "123456"
 }
 
 ###
-POST  http://localhost:3016/admin
-Content-Type: application/json
-
-{
-    "email": "laukeymwaura@tangerinefurn.com"
-}
-
-###
 GET http://localhost:3005/categories
-
 
 ###
 POST http://localhost:3005/add-category
@@ -57,7 +48,7 @@ GET http://localhost:3005/products
 ###
 GET http://localhost:3005/products?page=1&size=3&search=pa
 ###
-post http://localhost:3005/add-product
+post http://localhost:3005/edit-product
 Content-Type: application/json
 
 {
@@ -66,10 +57,34 @@ Content-Type: application/json
     "productName":"Leather 3-seater",
     "price":"45500",
     "description":"Leather 3-seater with posh hand rests",
-    "categoryId": 1
+    "categoryId": 2
 }
 
 ###
 GET http://localhost:5016/orders
 
 ###
+POST http://localhost:5016/add-order?userId=11
+Content-Type: application/json
+
+{
+        
+    "OrderID": 7,
+    "OrderDetail": [
+        {
+            "ProductID": 1,
+            "Quantity": 3,
+            "UnitPrice": 4350     
+        },     
+        {            
+          "ProductID": 2,
+          "Quantity": 3,
+          "UnitPrice": 4000
+        },
+        {            
+          "ProductID": 3,
+          "Quantity": 2,
+          "UnitPrice": 5560
+        }
+    ],       
+}
