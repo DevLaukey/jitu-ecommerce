@@ -13,7 +13,6 @@ const Customers = () => {
   const [showModal, setShowModal] = useState(false);
   const [viewModal, setViewModal] = useState(false);
   const [searchInput, setSearchInput] = useState("");
-  const [user, setUser] = useState("");
   useEffect(() => {
     setCustomers(null);
     axios
@@ -25,7 +24,7 @@ const Customers = () => {
         rows = response.data.records.length;
         setCustomers(response.data.records);
       });
-  }, [searchInput, user]);
+  }, [searchInput]);
 
   // function ViewCustomer() {
   // 	return (
@@ -48,6 +47,7 @@ const Customers = () => {
   // 		</>
   // 	);
   // }
+
   return (
     <>
       <div className="m-4 relative  w-full">
@@ -80,8 +80,8 @@ const Customers = () => {
             </button>
           </div>
         </div>
-        {showModal && <AdminModal setShowModal={setShowModal} />}
-        {viewModal && <EditModal setViewModal={setViewModal} user={user} />}
+			  {showModal && <AdminModal setShowModal={setShowModal} />}
+			  {viewModal && <EditModal setViewModal={setViewModal} />}
         <div className="flex flex-col">
           <div className="overflow-x-auto sm:-mx-6 lg:-mx-8 max-w-full">
             <div className="py-2 inline-block min-w-full sm:px-6 lg:px-8">
@@ -234,11 +234,8 @@ const Customers = () => {
                               {/* <button onClick={() => setViewModal(true)}>View</button> */}
                               {/* {viewModal ? ViewCustomer() : null} */}
                               <p
-                                onClick={() => {
-                                  setViewModal(true);
-                                  setUser(customer.email);
-                                }}
-                                className="hover:cursor-pointer mr-3 inline-block px-4 py-1 bg-blue-500 text-white font-medium text-xs leading-loose uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-md transition duration-150 ease-in-out"
+                                onClick={() => setShowModal(true)}
+                                className="mr-3 inline-block px-4 py-1 bg-blue-500 text-white font-medium text-xs leading-loose uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-md transition duration-150 ease-in-out"
                               >
                                 Edit
                               </p>

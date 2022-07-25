@@ -23,7 +23,7 @@ function Navbar() {
     search();
   }, [searchInput]);
 
-  let { isAdmin } = useSelector((state) => state.user);
+let { isAdmin } = useSelector((state) => state.user);
   return (
     <header className="text-white flex sticky z-50 top-0 left-0 right-0 space-x-4 items-center justify-between align-middle w-full  p-4 bg-blue-400">
       <div className="text-center ">
@@ -45,29 +45,26 @@ function Navbar() {
         </Link>
       </div>
       {/* <div className="flex items-center justify-center"> */}
-      {!isAdmin && (
-
-        <div className="input-group flex items-items justify-center">
-          <input
-            type="search"
-            className="form-control  flex-auto min-w-0 block w-full px-3 py-1.5 text-base font-normal rounded-lg transition ease-in-out m-0 bg-zinc-100 text-zinc-600 focus:outline-none"
-            placeholder="Search"
-            aria-label="Search"
-            onChange={(e) => setSearchInput(e.target.value)}
-            aria-describedby="button-addon2"
-          />
-          <span
-            className="input-group-text flex items-center px-2 py-1.5 text-base font-normal text-gray-200 text-center whitespace-nowrap rounded"
-            id="basic-addon2"
-          >
-            <BsSearch onClick={search} />
-          </span>
-          {/* </div> */}
-        </div>
-      )}
+      <div className="input-group flex items-items justify-center">
+        <input
+          type="search"
+          className="form-control  flex-auto min-w-0 block w-full px-3 py-1.5 text-base font-normal rounded-lg transition ease-in-out m-0 bg-zinc-100 text-zinc-600 focus:outline-none"
+          placeholder="Search"
+          aria-label="Search"
+          onChange={(e) => setSearchInput(e.target.value)}
+          aria-describedby="button-addon2"
+        />
+        <span
+          className="input-group-text flex items-center px-2 py-1.5 text-base font-normal text-gray-200 text-center whitespace-nowrap rounded"
+          id="basic-addon2"
+        >
+          <BsSearch onClick={search} />
+        </span>
+        {/* </div> */}
+      </div>
       <div className="flex justify-center">
-        {!isAdmin && (
-          <div className=" xl:w-96">
+        <div className=" xl:w-96">
+          {isAdmin ? null: (
             <select
               aria-label="select categories"
               className="form-select appearance-none block px-3 py-1.5 text-base font-light text-zinc-700 bg-white bg-clip-padding bg-no-repeat border border-solid border-zinc-300 rounded transition ease-in-out m-0 focus:text-zinc-700 focus:bg-white focus:border-blue-600 focus:outline-none"
@@ -81,37 +78,34 @@ function Navbar() {
                   ))
                 : ""}
             </select>
-          </div>
-        )}
+          )}
+        </div>
       </div>
 
       <div className="flex items-center justify-between gap-x-4">
-        {!isAdmin && (
-          <div className="text-gray-200 flex text-center whitespace-nowrap rounded">
-            <Link to="/bookmark">
-              <BsHeart className="text-xl" />
-            </Link>
-            {favorites.length > 0 && (
-              <div className="text-white bg-zinc-800 w-5 h-5 p-1 flex items-center justify-center relative -left-0.5 -top-3 text-xs rounded-full">
-                {favorites.reduce((acc, item) => acc + 1, 0)}
-              </div>
-            )}
-          </div>
-        )}
-        {!isAdmin && (
-          <div className="text-gray-200 flex  text-center whitespace-nowrap rounded">
-            <Link to="/cart">
-              <BsCart2 className="text-2xl " />
-            </Link>
-            {cart.length > 0 && (
-              <div className="text-white bg-zinc-800 w-auto h-5 p-1 flex items-center justify-center relative -left-2 -top-3 text-xs rounded-full">
-                {cart
-                  .map((item) => (item.quantity > 0 ? 1 : 0))
-                  .reduce((acc, item) => acc + item, 0)}
-              </div>
-            )}
-          </div>
-        )}
+        <div className="text-gray-200 flex text-center whitespace-nowrap rounded">
+          <Link to="/bookmark">
+            <BsHeart className="text-xl" />
+          </Link>
+          {favorites.length > 0 && (
+            <div className="text-white bg-zinc-800 w-5 h-5 p-1 flex items-center justify-center relative -left-0.5 -top-3 text-xs rounded-full">
+              {favorites.reduce((acc, item) => acc + 1, 0)}
+            </div>
+          )}
+        </div>
+
+        <div className="text-gray-200 flex  text-center whitespace-nowrap rounded">
+          <Link to="/cart">
+            <BsCart2 className="text-2xl " />
+          </Link>
+          {cart.length > 0 && (
+            <div className="text-white bg-zinc-800 w-auto h-5 p-1 flex items-center justify-center relative -left-2 -top-3 text-xs rounded-full">
+              {cart
+                .map((item) => (item.quantity > 0 ? 1 : 0))
+                .reduce((acc, item) => acc + item, 0)}
+            </div>
+          )}
+        </div>
 
         <div
           onClick={() => setToggle(!toggle)}
@@ -168,18 +162,16 @@ function Navbar() {
                 </Link>
               </li>
             )}
-            {loggedIn && (
-              <li className="">
-                <p
-                  className="rounded-b  text-white bg-blue-400 hover:bg-gray-400 py-2 px-4 block whitespace-no-wrap"
-                  onClick={() => {
-                    setShowModal(!showModal);
-                  }}
-                >
-                  Update Profile
-                </p>
-              </li>
-            )}
+          { loggedIn && (<li className="">
+              <p
+                className="rounded-b  text-white bg-blue-400 hover:bg-gray-400 py-2 px-4 block whitespace-no-wrap"
+                onClick={() => {
+                  setShowModal(!showModal);
+                }}
+              >
+                Update Profile
+              </p>
+            </li>)}
           </ul>
         </div>
       </div>

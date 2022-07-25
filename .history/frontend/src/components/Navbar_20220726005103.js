@@ -45,26 +45,24 @@ function Navbar() {
         </Link>
       </div>
       {/* <div className="flex items-center justify-center"> */}
-      {!isAdmin && (
+      <div className="input-group flex items-items justify-center">
+        <input
+          type="search"
+          className="form-control  flex-auto min-w-0 block w-full px-3 py-1.5 text-base font-normal rounded-lg transition ease-in-out m-0 bg-zinc-100 text-zinc-600 focus:outline-none"
+          placeholder="Search"
+          aria-label="Search"
+          onChange={(e) => setSearchInput(e.target.value)}
+          aria-describedby="button-addon2"
+        />
+        <span
+          className="input-group-text flex items-center px-2 py-1.5 text-base font-normal text-gray-200 text-center whitespace-nowrap rounded"
+          id="basic-addon2"
+        >
+          <BsSearch onClick={search} />
+        </span>
+        {/* </div> */}
+      </div>
 
-        <div className="input-group flex items-items justify-center">
-          <input
-            type="search"
-            className="form-control  flex-auto min-w-0 block w-full px-3 py-1.5 text-base font-normal rounded-lg transition ease-in-out m-0 bg-zinc-100 text-zinc-600 focus:outline-none"
-            placeholder="Search"
-            aria-label="Search"
-            onChange={(e) => setSearchInput(e.target.value)}
-            aria-describedby="button-addon2"
-          />
-          <span
-            className="input-group-text flex items-center px-2 py-1.5 text-base font-normal text-gray-200 text-center whitespace-nowrap rounded"
-            id="basic-addon2"
-          >
-            <BsSearch onClick={search} />
-          </span>
-          {/* </div> */}
-        </div>
-      )}
       <div className="flex justify-center">
         {!isAdmin && (
           <div className=" xl:w-96">
