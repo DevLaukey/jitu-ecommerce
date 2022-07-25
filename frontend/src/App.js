@@ -38,6 +38,10 @@ const App = () => {
 		axios.get(`${baseURL}/products`).then((response) => {
 			dispatch(loadProducts(response.data.records));
 		});
+		const localStorage = (() => {
+			const fieldValue = localStorage.getItem("user");
+			return fieldValue === null ? [] : JSON.parse(fieldValue);
+		})();
 	}, [dispatch]);
 
 	return (
@@ -50,7 +54,7 @@ const App = () => {
 				<Route path="/" element={<ProductGrid />} />
 				<Route path="/cart" element={<Cart />} />
 				<Route path="/bookmark" element={<Bookmark />} />
-				<Route path="/login" element={<Login />} />
+				<Route path="/login" element={<Login localStorage={localStorage} />} />
 				<Route path="/signup" element={<SignUp />} />
 				<Route path="/products/:productName" element={<ProductDetails />} />
 

@@ -1,23 +1,29 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { toast, ToastContainer } from "react-toastify";
 import { loginUser } from "../../redux/slices/userReducer";
 import { useDispatch } from "react-redux";
 
-function Login() {
+function Login({ localStorage }) {
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
 	const [email, setEmail] = useState();
 	const [password, setPassword] = useState();
+
+	// const localStorage = (() => {
+	// 	const fieldValue = localStorage.getItem("user");
+	// 	return fieldValue === null ? [] : JSON.parse(fieldValue);
+	// })();
+
 	const handleFormSubmit = (e) => {
 		e.preventDefault();
 
 		axios
 			.post(`http://localhost:3016/signin`, { email, password })
 			.then((response) => {
-				// console.log(response.data.token);
-				localStorage.setItem("token", JSON.stringify(response.data.token));
+				localStorage.push({ token: JSON.stringify(response.data.token), role: JSON.stringify(response.data.role) });
+				// localStorage.setItem("token", JSON.stringify(response.data.token));
 				toast.success(response.data.message, {
 					position: toast.POSITION.TOP_RIGHT,
 				});
