@@ -19,7 +19,7 @@ const Customers = () => {
 			rows = response.data.records.length;
 			setCustomers(response.data.records);
 		});
-	}, [searchInput]);
+	}, [search]);
 
 	
 	// function ViewCustomer() {

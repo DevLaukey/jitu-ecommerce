@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
-import AdminModal from "./AdminModal";
+import { toast } from "react-toastify";
 
 const baseURL = "http://localhost:3016";
 let rows,
@@ -11,38 +11,69 @@ const Customers = () => {
 	const [customers, setCustomers] = useState(null);
 	const [showModal, setShowModal] = useState(false);
 	const [viewModal, setViewModal] = useState(false);
-	const [searchInput, setSearchInput] = useState('');
+	const [inputs, setInputs] = useState({});
+
 	useEffect(() => {
 		setCustomers(null);
-		axios.get(`${baseURL}/users?page=1&size=3&orderBy=fullName&orderDir=ASC&search=${searchInput}`).then((response) => {
+		axios.get(`${baseURL}/users?page=1&size=3&orderBy=fullName&orderDir=ASC`).then((response) => {
+			console.log(response.data);
 			total = response.data.filtered;
 			rows = response.data.records.length;
 			setCustomers(response.data.records);
 		});
-	}, [searchInput]);
+	}, []);
 
-	
-	// function ViewCustomer() {
-	// 	return (
-	// 		<>
-	// 			{/*footer*/}
-	// 			<div className="flex items-center justify-end p-6 border-t border-solid border-slate-200 rounded-b">
-	// 				<button
-	// 					className="text-red-500 background-transparent font-bold uppercase px-6 py-2 text-sm outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
-	// 					type="button"
-	// 					onClick={() => setViewModal(false)}>
-	// 					Close
-	// 				</button>
-	// 				<button
-	// 					className="bg-emerald-500 text-white active:bg-emerald-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
-	// 					type="button"
-	// 					onClick={() => setViewModal(false)}>
-	// 					Save Changes
-	// 				</button>
-	// 			</div>
-	// 		</>
-	// 	);
-	// }
+	const handleChange = (event) => {
+		const name = event.target.name;
+		const value = event.target.value;
+		setInputs((values) => ({ ...values, [name]: value }));
+	};
+	const handleSubmit = async (event) => {
+		event.preventDefault();
+		let datainputs = JSON.stringify({
+			fullName: inputs.fullname,
+			email: inputs.email,
+			telephone: inputs.telephone,
+			password: inputs.password,
+		});
+
+		try {
+			await axios.post(`${baseURL}/signup`, datainputs, {
+				headers: { "Content-Type": "application/json" },
+			});
+			toast.success("Customer added successfully !", {
+				position: toast.POSITION.TOP_RIGHT,
+			});
+			setShowModal(false);
+		} catch (error) {
+			console.log(error.response.data.message);
+			toast.error(error.response.data.message, {
+				position: toast.POSITION.TOP_RIGHT,
+			});
+		}
+	};
+
+	function ViewCustomer() {
+		return (
+			<>
+				{/*footer*/}
+				<div className="flex items-center justify-end p-6 border-t border-solid border-slate-200 rounded-b">
+					<button
+						className="text-red-500 background-transparent font-bold uppercase px-6 py-2 text-sm outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+						type="button"
+						onClick={() => setViewModal(false)}>
+						Close
+					</button>
+					<button
+						className="bg-emerald-500 text-white active:bg-emerald-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+						type="button"
+						onClick={() => setViewModal(false)}>
+						Save Changes
+					</button>
+				</div>
+			</>
+		);
+	}
 
 	return (
 		<>
@@ -71,7 +102,105 @@ const Customers = () => {
 					</div>
 				</div>
 				{showModal ? (
-					<AdminModal  setShowModal={setShowModal}/>
+					<div className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none">
+						<div className="relative w-auto my-6 mx-auto max-w-3xl">
+							{/*content*/}
+							<div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
+								<form
+									action="/customers"
+									onSubmit={handleSubmit}
+									className="px-10 pt-3 pb-8 bg-zinc-50 rounded-lg drop-shadow-lg w-[500px] h-max">
+									<h1 className="text-xl text-zinc-800 py-1 mb-8 rounded font-light text-center  border-b">
+										Add Customer
+									</h1>
+
+									<div className="flex flex-col mb-3">
+										<label htmlFor="name">Name</label>
+										<input
+											type="text"
+											name="fullname"
+											id="fullname"
+											required
+											value={inputs.fullname || ""}
+											onChange={handleChange}
+											className="peer order-last border border-slate-400 rounded mt-1 py-1.5 px-2 focus:outline-none"
+										/>
+										<p className="-mt-6 ml-20 invisible peer-invalid:visible text-red-700 font-light">
+											Please enter customer name
+										</p>
+									</div>
+									<div className="flex flex-col mb-3">
+										<label htmlFor="email">Email</label>
+										<input
+											type="email"
+											name="email"
+											id="email"
+											required
+											value={inputs.email || ""}
+											onChange={handleChange}
+											className="peer order-last border border-slate-400 rounded mt-1 py-1.5 px-2 focus:outline-none"
+										/>
+										<p className="-mt-6 ml-20 invisible peer-invalid:visible text-red-700 font-light">
+											Please enter a valid email address
+										</p>
+									</div>
+									<div className="flex flex-col mb-3 ">
+										<label htmlFor="telephone">Telephone</label>
+										<input
+											type="tel"
+											name="telephone"
+											id="telephone"
+											required
+											value={inputs.telephone || ""}
+											onChange={handleChange}
+											className="peer order-last border border-slate-400 rounded mt-1 py-1.5 px-2 focus:outline-none"
+										/>
+										<p className="-mt-6 ml-20 invisible peer-invalid:visible text-red-700 font-light">
+											Please enter a valid telephone number
+										</p>
+									</div>
+									<div className="flex flex-col mb-3 ">
+										<label htmlFor="telephone">Password</label>
+										<input
+											type="text"
+											name="password"
+											id="password"
+											required
+											value={inputs.password || ""}
+											onChange={handleChange}
+											className="peer order-last border border-slate-400 rounded mt-1 py-1.5 px-2 focus:outline-none"
+										/>
+										<p className="-mt-6 ml-20 invisible peer-invalid:visible text-red-700 font-light">
+											Please enter a valid password
+										</p>
+									</div>
+									<div className="flex justify-between w-full">
+										<button
+											onClick={() => setShowModal(false)}
+											className="flex justify-center gap-x-1.5 items-center px-6 py-2 my-3 text-center text-white rounded bg-blue-600 hover:bg-rose-600 focus:bg-rose-600 font-light">
+											<svg
+												xmlns="http://www.w3.org/2000/svg"
+												className="h-5 w-5"
+												viewBox="0 0 20 20"
+												fill="currentColor">
+												<path
+													fillRule="evenodd"
+													d="M9.707 16.707a1 1 0 01-1.414 0l-6-6a1 1 0 010-1.414l6-6a1 1 0 011.414 1.414L5.414 9H17a1 1 0 110 2H5.414l4.293 4.293a1 1 0 010 1.414z"
+													clipRule="evenodd"
+												/>
+											</svg>
+											Close
+										</button>
+										<button
+											type="submit"
+											className="px-6 py-2 my-3 text-center text-white rounded bg-blue-600 hover:bg-green-600 focus:bg-green-600 font-light">
+											Submit
+										</button>
+									</div>
+								</form>
+							</div>
+						</div>
+					</div>
 				) : null}
 				<div className="flex flex-col">
 					<div className="overflow-x-auto sm:-mx-6 lg:-mx-8 max-w-full">
@@ -118,10 +247,6 @@ const Customers = () => {
 											</div>
 											<input
 												type="search"
-												onChange={(e) => {
-													e.preventDefault();
-													setSearchInput(e.target.value)
-												}}
 												id="default-search"
 												class="block py-2 pl-10 w-full text-sm text-gray-900 bg-gray-50 rounded-lg focus:outline-none  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 "
 												placeholder="Search name, email..."
@@ -194,7 +319,7 @@ const Customers = () => {
 														</td>
 														<td className="text-sm text-zinc-900 font-light px-3 whitespace-nowrap">
 															<button onClick={() => setViewModal(true)}>View</button>
-															{/* {viewModal ? ViewCustomer() : null} */}
+															{viewModal ? ViewCustomer() : null}
 															<Link
 																to="/edit-order"
 																className="mr-3 inline-block px-4 py-1 bg-blue-500 text-white font-medium text-xs leading-loose uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-md transition duration-150 ease-in-out">

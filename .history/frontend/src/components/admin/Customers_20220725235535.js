@@ -14,12 +14,12 @@ const Customers = () => {
 	const [searchInput, setSearchInput] = useState('');
 	useEffect(() => {
 		setCustomers(null);
-		axios.get(`${baseURL}/users?page=1&size=3&orderBy=fullName&orderDir=ASC&search=${searchInput}`).then((response) => {
+		axios.get(`${baseURL}/users?page=1&size=3&orderBy=fullName&orderDir=ASC`).then((response) => {
 			total = response.data.filtered;
 			rows = response.data.records.length;
 			setCustomers(response.data.records);
 		});
-	}, [searchInput]);
+	}, []);
 
 	
 	// function ViewCustomer() {

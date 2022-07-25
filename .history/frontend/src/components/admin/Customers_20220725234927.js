@@ -11,38 +11,39 @@ const Customers = () => {
 	const [customers, setCustomers] = useState(null);
 	const [showModal, setShowModal] = useState(false);
 	const [viewModal, setViewModal] = useState(false);
-	const [searchInput, setSearchInput] = useState('');
+
 	useEffect(() => {
 		setCustomers(null);
-		axios.get(`${baseURL}/users?page=1&size=3&orderBy=fullName&orderDir=ASC&search=${searchInput}`).then((response) => {
+		axios.get(`${baseURL}/users?page=1&size=3&orderBy=fullName&orderDir=ASC`).then((response) => {
+			// console.log(response.data);
 			total = response.data.filtered;
 			rows = response.data.records.length;
 			setCustomers(response.data.records);
 		});
-	}, [searchInput]);
+	}, []);
 
 	
-	// function ViewCustomer() {
-	// 	return (
-	// 		<>
-	// 			{/*footer*/}
-	// 			<div className="flex items-center justify-end p-6 border-t border-solid border-slate-200 rounded-b">
-	// 				<button
-	// 					className="text-red-500 background-transparent font-bold uppercase px-6 py-2 text-sm outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
-	// 					type="button"
-	// 					onClick={() => setViewModal(false)}>
-	// 					Close
-	// 				</button>
-	// 				<button
-	// 					className="bg-emerald-500 text-white active:bg-emerald-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
-	// 					type="button"
-	// 					onClick={() => setViewModal(false)}>
-	// 					Save Changes
-	// 				</button>
-	// 			</div>
-	// 		</>
-	// 	);
-	// }
+	function ViewCustomer() {
+		return (
+			<>
+				{/*footer*/}
+				<div className="flex items-center justify-end p-6 border-t border-solid border-slate-200 rounded-b">
+					<button
+						className="text-red-500 background-transparent font-bold uppercase px-6 py-2 text-sm outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+						type="button"
+						onClick={() => setViewModal(false)}>
+						Close
+					</button>
+					<button
+						className="bg-emerald-500 text-white active:bg-emerald-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+						type="button"
+						onClick={() => setViewModal(false)}>
+						Save Changes
+					</button>
+				</div>
+			</>
+		);
+	}
 
 	return (
 		<>
@@ -118,10 +119,6 @@ const Customers = () => {
 											</div>
 											<input
 												type="search"
-												onChange={(e) => {
-													e.preventDefault();
-													setSearchInput(e.target.value)
-												}}
 												id="default-search"
 												class="block py-2 pl-10 w-full text-sm text-gray-900 bg-gray-50 rounded-lg focus:outline-none  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 "
 												placeholder="Search name, email..."
@@ -194,7 +191,7 @@ const Customers = () => {
 														</td>
 														<td className="text-sm text-zinc-900 font-light px-3 whitespace-nowrap">
 															<button onClick={() => setViewModal(true)}>View</button>
-															{/* {viewModal ? ViewCustomer() : null} */}
+															{viewModal ? ViewCustomer() : null}
 															<Link
 																to="/edit-order"
 																className="mr-3 inline-block px-4 py-1 bg-blue-500 text-white font-medium text-xs leading-loose uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-md transition duration-150 ease-in-out">
