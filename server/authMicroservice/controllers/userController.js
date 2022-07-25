@@ -4,12 +4,34 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 
 // ToDO
-// Send email to user after login
 // reset password
 
 module.exports = {
+  makeAdmin: async (req, res) => {
+    const { email } = req.body;
+    try {
+      await exec("verify_exists", {
+        email,
+      }).then(
+        (response) =>{ console.log(response.recordset),
+        res.status(200).json({
+          status: 200,
+          success: true,
+          data: response.recordset,
+        })}
+      );
+    } catch (error) {
+      console.log(error.message);
+      res.status(500).json({
+        status: 500,
+        success: false,
+        message: error.message,
+      });
+    }
+  },
+
   signup: async (req, res) => {
-    const { fullName, email, telephone, password } = req.body;
+    const { fullName, email, telephone, password, role } = req.body;
     try {
       const userExists = await exec("verify_exists", {
         email,
@@ -30,6 +52,7 @@ module.exports = {
         email,
         telephone,
         password: hashPass,
+        role,
       });
       const token = jwt.sign({ email }, process.env.JWTKEY, {
         expiresIn: "1h",
@@ -74,15 +97,14 @@ module.exports = {
 
         const token = jwt.sign({ email: user.email }, process.env.JWTKEY, {
           expiresIn: "1h",
-		});
-		  loginEmail(email)
+        });
+
         return res.status(201).json({
           status: 201,
           success: true,
           message: "logged in successfully",
           token,
-		});
-		  
+        });
       } else {
         return res.status(401).json({
           status: 401,

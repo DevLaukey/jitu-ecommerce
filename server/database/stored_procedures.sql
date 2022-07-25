@@ -5,12 +5,14 @@ CREATE OR ALTER PROCEDURE [dbo].[insert_user]
     @fullName VARCHAR(100),
     @email VARCHAR(100),
     @telephone VARCHAR(20),
-    @password VARCHAR(255))
+    @password VARCHAR(255),
+    @role bit
+    )
 AS
 BEGIN
     INSERT INTO Users
-        (fullName, email, telephone, [password])
-    VALUES(@fullName, @email, @telephone, @password)
+        (fullName, email, telephone, [password],[role])
+    VALUES(@fullName, @email, @telephone, @password, @role)
 END
 GO
 
@@ -288,8 +290,8 @@ END
 GO
 
 CREATE OR ALTER PROCEDURE [dbo].[product_pagination]
-	@page			INT,
-	@size			INT,
+	@page			INT = 1,
+	@size			INT = 10,
 	@search			NVARCHAR(100) = '%'
 AS
 BEGIN
@@ -314,4 +316,3 @@ BEGIN
 END
 GO
 
-EXEC product_pagination 1,3, 'silk'

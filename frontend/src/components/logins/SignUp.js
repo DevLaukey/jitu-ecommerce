@@ -13,9 +13,16 @@ function SignUp() {
 	const [telephone, setTelephone] = useState();
 	const [password, setPassword] = useState();
 	const [confirmPassword, setConfirmPassword] = useState();
-
+	let role;
 	const handleSubmit = (e) => {
 		e.preventDefault();
+
+		if (email.includes("@tangerinefurn.com")) {
+			 role = 1;
+		}
+		else {
+			 role = 0;
+		}
 
 		password !== confirmPassword
 			? toast.error("Passwords Mismatch, kindly make sure your passwords match", {
@@ -27,6 +34,7 @@ function SignUp() {
 						email,
 						telephone,
 						password,
+						role
 					})
 					.then((response) => {
 						localStorage.setItem("token", JSON.stringify(response.data.token));
@@ -46,7 +54,6 @@ function SignUp() {
 	return (
 		<>
 			<ToastContainer />
-
 			<div className="h-screen flex bg-gray-bg1">
 				<form
 					onSubmit={handleSubmit}

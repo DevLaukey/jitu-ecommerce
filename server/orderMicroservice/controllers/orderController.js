@@ -22,19 +22,23 @@ module.exports = {
 
 	createOrder: async (req, res) => {
 		const { userId } = req.query;
-		const { orderId, products } = req.body;
+		const { orderId, OrderDetail } = req.body;
+		console.log(orderId);
 		try {
-			const insOrder = await exec("store_orders", {
+			const insOrder = await exec("create_order", {
 				userId,
-				orderId,
-				products,
 			});
 			if (insOrder) {
-				return res.status(201).json({
-					status: 201,
-					success: true,
-					message: "Success, order created",
-				});
+				// const orderId = await exec("latest_order");
+
+				const orderDetail = await exec("createorder", { OrderDetail });
+				if (orderDetail) {
+					return res.status(201).json({
+						status: 201,
+						success: true,
+						message: "Success, order created",
+					});
+				}
 			}
 		} catch (error) {
 			console.log(error.message);
