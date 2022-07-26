@@ -67,24 +67,18 @@ GET http://localhost:5016/orders
 POST http://localhost:5016/add-order?userId=11
 Content-Type: application/json
 
-{
-        
-    "OrderID": 7,
-    "OrderDetail": [
+ {
+        "OrderDetail": [
         {
-            "ProductID": 1,
+            "ProductID": 3,
             "Quantity": 3,
-            "UnitPrice": 4350     
+            "UnitPrice": 4350
         },     
         {            
           "ProductID": 2,
-          "Quantity": 3,
+          "Quantity": 5,
           "UnitPrice": 4000
-        },
-        {            
-          "ProductID": 3,
-          "Quantity": 2,
-          "UnitPrice": 5560
         }
-    ],       
+        
+    ]      
 }
