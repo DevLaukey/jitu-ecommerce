@@ -11,7 +11,7 @@ const Customers = () => {
 	const [customers, setCustomers] = useState(null);
 	const [showModal, setShowModal] = useState(false);
 	const [viewModal, setViewModal] = useState(false);
-	const [searchInput, setSearchInput] = useState('');
+	const [searchInput, setSearchInput] = useState("");
 	useEffect(() => {
 		setCustomers(null);
 		axios.get(`${baseURL}/users?page=1&size=3&orderBy=fullName&orderDir=ASC&search=${searchInput}`).then((response) => {
@@ -20,29 +20,6 @@ const Customers = () => {
 			setCustomers(response.data.records);
 		});
 	}, [searchInput]);
-
-	
-	// function ViewCustomer() {
-	// 	return (
-	// 		<>
-	// 			{/*footer*/}
-	// 			<div className="flex items-center justify-end p-6 border-t border-solid border-slate-200 rounded-b">
-	// 				<button
-	// 					className="text-red-500 background-transparent font-bold uppercase px-6 py-2 text-sm outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
-	// 					type="button"
-	// 					onClick={() => setViewModal(false)}>
-	// 					Close
-	// 				</button>
-	// 				<button
-	// 					className="bg-emerald-500 text-white active:bg-emerald-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
-	// 					type="button"
-	// 					onClick={() => setViewModal(false)}>
-	// 					Save Changes
-	// 				</button>
-	// 			</div>
-	// 		</>
-	// 	);
-	// }
 
 	return (
 		<>
@@ -66,13 +43,9 @@ const Customers = () => {
 							</svg>
 							Add Customer
 						</button>
-
-						
 					</div>
 				</div>
-				{showModal ? (
-					<AdminModal  setShowModal={setShowModal}/>
-				) : null}
+				{showModal ? <AdminModal setShowModal={setShowModal} /> : null}
 				<div className="flex flex-col">
 					<div className="overflow-x-auto sm:-mx-6 lg:-mx-8 max-w-full">
 						<div className="py-2 inline-block min-w-full sm:px-6 lg:px-8">
@@ -120,7 +93,7 @@ const Customers = () => {
 												type="search"
 												onChange={(e) => {
 													e.preventDefault();
-													setSearchInput(e.target.value)
+													setSearchInput(e.target.value);
 												}}
 												id="default-search"
 												class="block py-2 pl-10 w-full text-sm text-gray-900 bg-gray-50 rounded-lg focus:outline-none  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 "
