@@ -31,7 +31,7 @@ const Products = () => {
         rows = response.data.records.length;
         setProducts(response.data.records);
       });
-  }, [searchInput, user, productID, viewModal, showModal]);
+  }, [searchInput, user, productID, viewModal]);
   return (
     <>
       <div className="m-4 relative  w-full">
