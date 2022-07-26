@@ -141,6 +141,29 @@ const Customers = () => {
 												</svg>
 											</th>
 
+<<<<<<< HEAD
+                      <th
+                        scope="col"
+                        className="text-sm font-medium text-gray-900 px-3 py-2 text-left"
+                      >
+                        Status
+                      </th>
+                      <th
+                        scope="col"
+                        className="text-sm font-medium text-gray-900 px-3 py-2 text-center"
+                      >
+                        Action
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {customers
+                      ? customers.map((customer, index) => (
+                          <tr key={customer.userId} className="border-b">
+                            <td className="px-3 py-3 whitespace-nowrap text-sm font-medium text-gray-900">
+                              {index + 1}
+                            </td>
+=======
 											<th scope="col" className="text-sm font-medium text-gray-900 px-3 py-2 text-left">
 												Status
 											</th>
@@ -156,6 +179,7 @@ const Customers = () => {
 														<td className="px-3 py-3 whitespace-nowrap text-sm font-medium text-gray-900">
 															{index + 1}
 														</td>
+>>>>>>> 5d8db612a620aad9d4d55f0a1440e542ef3aec7c
 
 														<td className="text-sm text-zinc-900 font-light px-3 whitespace-nowrap">
 															{customer.fullName}
