@@ -19,7 +19,6 @@ const Products = () => {
   const [showModal, setShowModal] = useState(false);
   const [viewModal, setViewModal] = useState(false);
   const [searchInput, setSearchInput] = useState("");
-  const [productID, setProductID] = useState()
   const [user, setUser] = useState("");
   useEffect(() => {
     setProducts(null);
@@ -31,7 +30,8 @@ const Products = () => {
         rows = response.data.records.length;
         setProducts(response.data.records);
       });
-  }, [searchInput, user, productID]);
+  }, [searchInput, user]);
+
   return (
     <>
       <div className="m-4 relative  w-full">
@@ -64,7 +64,7 @@ const Products = () => {
           </div>
         </div>
         {showModal && <ProductModal setShowModal={setShowModal} />}
-        {viewModal && <ProductEdit setViewModal={setViewModal} user={user} proddId={productID} />}
+        {viewModal && <ProductEdit setViewModal={setViewModal} user={user} />}
         <div className="flex flex-col">
           <div className="overflow-x-auto sm:-mx-6 lg:-mx-8 max-w-full">
             <div className="py-2 inline-block min-w-full sm:px-6 lg:px-8">
@@ -246,8 +246,7 @@ const Products = () => {
                               <p
                                 onClick={() => {
                                   setViewModal(true);
-                                setUser(product.productName);
-                               setProductID(product.productID);
+                                  setUser(product.productName);
                                 }}
                                 className="hover:cursor-pointer mr-3 inline-block px-4 py-1 bg-blue-500 text-white font-medium text-xs leading-loose uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-md transition duration-150 ease-in-out"
                             >

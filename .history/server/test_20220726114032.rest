@@ -55,7 +55,7 @@ GET http://localhost:3005/products
 
 
 ###
-GET http://localhost:3005/products?page=1&size=3&search=se
+GET http://localhost:3005/products?page=1&size=3&search=silk
 ###
 post http://localhost:3005/add-product
 Content-Type: application/json

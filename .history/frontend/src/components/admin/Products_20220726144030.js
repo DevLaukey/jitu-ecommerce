@@ -32,6 +32,7 @@ const Products = () => {
         setProducts(response.data.records);
       });
   }, [searchInput, user, productID]);
+console.log(productID);
   return (
     <>
       <div className="m-4 relative  w-full">
