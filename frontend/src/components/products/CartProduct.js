@@ -1,16 +1,44 @@
-import React from "react";
+import axios from "axios";
+import React, { useEffect } from "react";
 import CurrencyFormat from "react-currency-format";
 import { AiOutlineMinus, AiOutlinePlus } from "react-icons/ai";
 import { useDispatch, useSelector } from "react-redux";
-import { addItemQuantity, minusItemQuantity, removeFromCart } from "../../redux/slices/cartReducer";
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+import { addItemQuantity, clearCart, minusItemQuantity, removeFromCart } from "../../redux/slices/cartReducer";
 
-function CartProduct({ product }) {
+function CartProduct({ product, send }) {
 	const dispatch = useDispatch();
-
+	const navigate = useNavigate();
 	const { cart } = useSelector((state) => state.cart);
 	const { categories } = useSelector((state) => state.product);
 
 	const cartItem = cart?.find((item) => item.productID === product.productID);
+
+	const OrderDetail = [
+		{
+			ProductID: cartItem.productID,
+			Quantity: cartItem.quantity,
+			UnitPrice: cartItem?.price * cartItem?.quantity,
+		},
+	];
+
+	console.log(OrderDetail);
+	useEffect(() => {
+		send &&
+			axios
+				.post(`http://localhost:5016/add-order?userId=17`, { OrderDetail: OrderDetail })
+				.then((response) => {
+					toast.success(response.data.message, {
+						position: toast.POSITION.TOP_RIGHT,
+					});
+					navigate("/");
+					dispatch(clearCart());
+				})
+				.catch((err, response) => {
+					console.log(err);
+				});
+	}, [send]);
 
 	const removeItems = () => {
 		if (cartItem?.quantity > 1) {
@@ -27,6 +55,7 @@ function CartProduct({ product }) {
 	const addItems = () => {
 		dispatch(addItemQuantity(product.productID));
 	};
+
 	return (
 		<div className="flex items-center hover:bg-gray-100 -mx-8 px-6 py-5">
 			<div className="md:flex w-2/5">

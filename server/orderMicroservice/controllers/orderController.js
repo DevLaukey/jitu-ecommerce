@@ -1,4 +1,5 @@
 const { exec } = require("../../authMicroservice/helpers/db");
+const { OrderEmail } = require("../../authMicroservice/controllers/mailController");
 const crypto = require("crypto");
 
 module.exports = {
@@ -27,6 +28,13 @@ module.exports = {
 
 		const OrderID = crypto.randomBytes(8).toString("hex");
 
+		const fetchemail = await exec("fetchUserEmailById", { userId });
+		const fetchfullName = await exec("fetchUserNameById", { userId });
+
+		// console.log(fetchemail.recordset[0].email);
+		const email = fetchemail.recordset[0].email;
+		const fullName = fetchfullName.recordset[0].fullName;
+
 		OrderDetail = OrderDetail.map((det) => ({ OrderID, ...det }));
 		try {
 			const insOrder = await exec("create_order", {
@@ -39,10 +47,17 @@ module.exports = {
 
 				const createorder = await exec("createorderdetails", { json: Details });
 				if (createorder) {
+					OrderEmail(email, fullName, OrderID, Details);
 					return res.status(201).json({
 						status: 201,
 						success: true,
 						message: "Success, order created",
+					});
+				} else {
+					return res.status(500).json({
+						status: 500,
+						success: false,
+						message: "Please try again later",
 					});
 				}
 			}

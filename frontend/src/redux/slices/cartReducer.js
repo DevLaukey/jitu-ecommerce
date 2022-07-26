@@ -5,6 +5,7 @@ const cartSlice = createSlice({
 	initialState: {
 		cart: [],
 		favorites: [],
+		checkout: [],
 	},
 	reducers: {
 		addToCart: (state, action) => {
@@ -38,6 +39,9 @@ const cartSlice = createSlice({
 			const newItems = state.favorites.filter((item) => item.productID !== action.payload);
 			state.favorites = newItems;
 		},
+		addToCheckout: (state, action) => {
+			state.checkout = [...state.checkout, action.payload];
+		},
 	},
 });
 
@@ -49,6 +53,7 @@ export const {
 	clearCart,
 	addToFavorite,
 	removeFromFavorite,
+	addToCheckout,
 } = cartSlice.actions;
 
 export default cartSlice.reducer;

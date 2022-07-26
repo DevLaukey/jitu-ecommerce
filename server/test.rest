@@ -1,5 +1,6 @@
 
-GET http://localhost:3016/users?page=1&size=3&search=pa
+GET http://localhost:3016/users?page=1&size=3&search='dev'
+
 
 ###
 POST http://localhost:3016/signup
@@ -46,7 +47,7 @@ GET http://localhost:3005/products
 
 
 ###
-GET http://localhost:3005/products?page=1&size=3&search=pa
+GET http://localhost:3005/products?page=1&size=3&search=se
 ###
 post http://localhost:3005/edit-product
 Content-Type: application/json

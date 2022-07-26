@@ -57,6 +57,25 @@ BEGIN
 END
 GO
 
+CREATE or ALTER PROCEDURE [dbo].[fetchUserEmailById]
+    @userid INT
+AS
+BEGIN
+    SELECT email
+    FROM Users
+    WHERE userId = @userid
+END
+GO
+
+CREATE or ALTER PROCEDURE [dbo].[fetchUserNameById]
+    @userid INT
+AS
+BEGIN
+    SELECT fullName
+    FROM Users
+    WHERE userId = @userid
+END
+GO
 
 
 -- Stored procedures for categories
@@ -350,3 +369,4 @@ BEGIN
     ) AS jsonValues
 
 END
+

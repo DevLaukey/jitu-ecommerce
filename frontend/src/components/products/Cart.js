@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import CurrencyFormat from "react-currency-format";
 import { BsArrowLeft } from "react-icons/bs";
 import { useSelector } from "react-redux";
@@ -7,11 +7,14 @@ import CartProduct from "./CartProduct";
 
 function Cart() {
 	const navigate = useNavigate();
-	const { cart } = useSelector((state) => state.cart);
+
+	let { cart } = useSelector((state) => state.cart);
 	const loggedIn = useSelector((state) => state.user.loggedIn);
-	const checkout = (e) => {
+	const [send, setSend] = useState(false);
+
+	const checkoutHere = (e) => {
 		e.preventDefault();
-		loggedIn ? console.log("checked out") : navigate("/login");
+		loggedIn ? setSend(true) : navigate("/login");
 	};
 	return (
 		<div className="container mx-auto ">
@@ -30,7 +33,7 @@ function Cart() {
 						<h3 className="font-semibold  text-gray-600 text-xs uppercase md:w-1/5 text-center">Total</h3>
 					</div>
 					{cart.map((item) => (
-						<CartProduct product={item} key={item.productID} />
+						<CartProduct product={item} key={item.productID} send={send} />
 					))}
 					<Link to="/" className="flex w-60 gap-x-3 font-semibold items-center text-indigo-600 text mt-10">
 						<BsArrowLeft />
@@ -60,7 +63,7 @@ function Cart() {
 							</span>
 						</div>
 						<button
-							onClick={checkout}
+							onClick={checkoutHere}
 							className="bg-blue-500 font-semibold hover:bg-indigo-600 py-3 text-sm text-white uppercase w-full">
 							Checkout
 						</button>
