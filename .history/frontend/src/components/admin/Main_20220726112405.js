@@ -31,7 +31,7 @@ const DashBoard = () => {
                   d="M19 14l-7 7m0 0l-7-7m7 7V3"
                 />
               </svg>
-              Email Report
+              Get  Report
             </button>
             
           </div>

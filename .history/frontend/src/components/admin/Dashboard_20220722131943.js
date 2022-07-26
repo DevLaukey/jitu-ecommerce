@@ -7,6 +7,7 @@ let rows,
   total = 0;
 const Customers = () => {
   const [customers, setCustomers] = useState(null);
+
   useEffect(() => {
     setCustomers(null);
     axios

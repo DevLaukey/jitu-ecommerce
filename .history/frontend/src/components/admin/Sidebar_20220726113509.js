@@ -18,7 +18,7 @@ const Sidebar = () => {
         `${baseURL}/users?page=1&size=3&orderBy=fullName&orderDir=ASC&search=${email}`
       )
       .then((response) => {
-        setName(response.data.records[0].fullName);
+        console.log(response.data.records[0].fullName);
       });
   }, [email]);
   return (
@@ -34,7 +34,7 @@ const Sidebar = () => {
                 <BsFillPersonFill className="rounded-full w-15" />
               </div>
               <div className="grow ml-3">
-                <h1 className="text-sm font-semibold text-blue-600">{name}</h1>
+                <p className="text-sm font-semibold text-blue-600">{name}</p>
               </div>
             </div>
           </Link>

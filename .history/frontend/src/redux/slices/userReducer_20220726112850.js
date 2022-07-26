@@ -6,13 +6,12 @@ const userSlice = createSlice({
     loggedIn: false,
     profileUpdated: "",
     isAdmin: false,
-    email: "",
+    name: "",
     count: 0,
   },
   reducers: {
     loginUser: (state, { payload }) => {
       state.loggedIn = true;
-      state.email = payload;
       if (payload.includes("@tangerinefurn.com")) {
         state.isAdmin = true;
       } else {

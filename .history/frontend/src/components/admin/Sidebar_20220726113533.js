@@ -34,7 +34,7 @@ const Sidebar = () => {
                 <BsFillPersonFill className="rounded-full w-15" />
               </div>
               <div className="grow ml-3">
-                <h1 className="text-sm font-semibold text-blue-600">{name}</h1>
+                <p className="text-sm font-semibold text-blue-600">{name}</p>
               </div>
             </div>
           </Link>

@@ -7,6 +7,7 @@ let rows,
   total = 0;
 const Customers = () => {
   const [customers, setCustomers] = useState(null);
+ const customerCount = useSelector((state) => state.user.count)
   useEffect(() => {
     setCustomers(null);
     axios

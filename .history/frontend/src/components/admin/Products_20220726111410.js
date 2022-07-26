@@ -1,44 +1,40 @@
 /* eslint-disable jsx-a11y/img-redundant-alt */
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { Link } from "react-router-dom";
+import { useDispatch } from "react-redux";
 import AdminModal from "./AdminModal";
 import EditModal from "./EditModal";
-import { updateCount } from "../../redux/slices/userReducer";
-import { useDispatch } from "react-redux";
+import { updateCount } from "../../redux/slices/productReducer";
 
-const baseURL = "http://localhost:3016";
+const baseURL = "http://localhost:3005";
 let rows,
   total = 0;
-const Customers = () => {
+const Products = () => {
+
   const dispatch = useDispatch();
-  const [customers, setCustomers] = useState(null);
+  const [products, setProducts] = useState(null);
   const [showModal, setShowModal] = useState(false);
   const [viewModal, setViewModal] = useState(false);
   const [searchInput, setSearchInput] = useState("");
   const [user, setUser] = useState("");
   useEffect(() => {
-    setCustomers(null);
+    setProducts(null);
     axios
-      .get(
-        `${baseURL}/users?page=1&size=3&orderBy=fullName&orderDir=ASC&search=${searchInput}`
-      )
+      .get(`${baseURL}/products?page=1&size=3&search=${searchInput}`)
       .then((response) => {
-                dispatch(updateCount(response.data.filtered));
-
+        dispatch(updateCount(response.data.filtered));
         total = response.data.filtered;
         rows = response.data.records.length;
-        setCustomers(response.data.records);
+        setProducts(response.data.records);
       });
   }, [searchInput, user]);
-
 
   return (
     <>
       <div className="m-4 relative  w-full">
         <div className="flex items-center justify-between mb-4">
           <h2 className="text-lg md:text-2xl font-semibold text-black">
-            Customers
+            Products
           </h2>
           <div className="flex space-x-2 justify-center ">
             <button
@@ -46,7 +42,6 @@ const Customers = () => {
               onClick={() => setShowModal(true)}
               className="inline-flex items-center gap-x-2 px-6 py-1.5 bg-blue-500 text-white font-medium text-xs leading-loose uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-md transition duration-150 ease-in-out"
             >
-              {" "}
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 className="h-5 w-5"
@@ -61,7 +56,7 @@ const Customers = () => {
                   d="M12 4v16m8-8H4"
                 />
               </svg>
-              Add Customer
+              Add Products
             </button>
           </div>
         </div>
@@ -190,21 +185,21 @@ const Customers = () => {
                     </tr>
                   </thead>
                   <tbody>
-                    {customers
-                      ? customers.map((customer, index) => (
-                          <tr key={customer.userId} className="border-b">
+                    {products
+                      ? products.map((product, index) => (
+                          <tr key={product.productId} className="border-b">
                             <td className="px-3 py-3 whitespace-nowrap text-sm font-medium text-gray-900">
                               {index + 1}
                             </td>
 
                             <td className="text-sm text-zinc-900 font-light px-3 whitespace-nowrap">
-                              {customer.fullName}
+                              {product.productName}
                             </td>
                             <td className="text-sm text-zinc-900 font-light px-3 whitespace-nowrap">
-                              {customer.telephone}
+                              {/* {customer.telephone} */}
                             </td>
                             <td className="text-sm text-zinc-900 font-light px-3 whitespace-nowrap">
-                              {customer.email}
+                              {/* {customer.email} */}
                             </td>
                             <td className="text-sm text-zinc-900 font-light px-3 whitespace-nowrap text-center">
                               2
@@ -221,7 +216,7 @@ const Customers = () => {
                               <p
                                 onClick={() => {
                                   setViewModal(true);
-                                  setUser(customer.email);
+                                  // setUser(customer.email);
                                 }}
                                 className="hover:cursor-pointer mr-3 inline-block px-4 py-1 bg-blue-500 text-white font-medium text-xs leading-loose uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-md transition duration-150 ease-in-out"
                               >
@@ -269,4 +264,4 @@ const Customers = () => {
   );
 };
 
-export default Customers;
+export default Products;

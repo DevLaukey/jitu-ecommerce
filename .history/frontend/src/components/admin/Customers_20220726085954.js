@@ -1,17 +1,13 @@
 /* eslint-disable jsx-a11y/img-redundant-alt */
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { Link } from "react-router-dom";
 import AdminModal from "./AdminModal";
 import EditModal from "./EditModal";
-import { updateCount } from "../../redux/slices/userReducer";
-import { useDispatch } from "react-redux";
 
 const baseURL = "http://localhost:3016";
 let rows,
   total = 0;
 const Customers = () => {
-  const dispatch = useDispatch();
   const [customers, setCustomers] = useState(null);
   const [showModal, setShowModal] = useState(false);
   const [viewModal, setViewModal] = useState(false);
@@ -24,8 +20,6 @@ const Customers = () => {
         `${baseURL}/users?page=1&size=3&orderBy=fullName&orderDir=ASC&search=${searchInput}`
       )
       .then((response) => {
-                dispatch(updateCount(response.data.filtered));
-
         total = response.data.filtered;
         rows = response.data.records.length;
         setCustomers(response.data.records);

@@ -31,9 +31,14 @@ const DashBoard = () => {
                   d="M19 14l-7 7m0 0l-7-7m7 7V3"
                 />
               </svg>
-              Email Report
+              Download Report
             </button>
-            
+            <button
+              type="button"
+              className="inline-block px-6 py-1.5 bg-zinc-500 text-white font-medium text-xs leading-loose uppercase rounded shadow-md hover:bg-zinc-700 hover:shadow-lg focus:bg-zinc-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-zinc-800 active:shadow-md transition duration-150 ease-in-out"
+            >
+              Date Picker
+            </button>
           </div>
         </span>
       </div>

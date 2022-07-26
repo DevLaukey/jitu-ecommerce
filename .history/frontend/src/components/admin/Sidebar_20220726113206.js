@@ -1,26 +1,25 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
 import { MdOutlineSpaceDashboard } from "react-icons/md";
 import { BsCashCoin, BsFillPersonFill } from "react-icons/bs";
 import { BiChair } from "react-icons/bi";
 import { useSelector } from "react-redux";
-import axios from "axios";
 
 const Sidebar = () => {
   const baseURL = "http://localhost:3016";
 
-  const [name, setName] = useState();
-  const { email } = useSelector((state) => state.user);
-  useEffect(() => {
-    setName(null);
-    axios
-      .get(
-        `${baseURL}/users?page=1&size=3&orderBy=fullName&orderDir=ASC&search=${email}`
-      )
-      .then((response) => {
-        setName(response.data.records[0].fullName);
-      });
-  }, [email]);
+  const [name, setName] = useState()
+  const {email} = useSelector((state) => state.user)
+ useEffect(() => {
+   setName(null);
+   axios
+     .get(
+       `${baseURL}/users?search=${searchInput}`
+     )
+     .then((response) => {
+console.log(response);
+     });
+ }, [searchInput, user]);
   return (
     <>
       <div
@@ -32,9 +31,12 @@ const Sidebar = () => {
             <div className="flex items-center">
               <div className="shrink-0">
                 <BsFillPersonFill className="rounded-full w-15" />
+               
               </div>
               <div className="grow ml-3">
-                <h1 className="text-sm font-semibold text-blue-600">{name}</h1>
+                <p className="text-sm font-semibold text-blue-600">
+                  {name}
+                </p>
               </div>
             </div>
           </Link>

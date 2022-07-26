@@ -12,7 +12,6 @@ const userSlice = createSlice({
   reducers: {
     loginUser: (state, { payload }) => {
       state.loggedIn = true;
-      state.email = payload;
       if (payload.includes("@tangerinefurn.com")) {
         state.isAdmin = true;
       } else {
@@ -25,12 +24,9 @@ const userSlice = createSlice({
     addProfile: (state, { payload }) => {
       state.profileUpdated = payload;
     },
-    updateCount: (state, { payload }) => {
-      state.count = payload;
-    }
   },
 });
 
-export const { loginUser, addProfile, logoutUser, updateCount } = userSlice.actions;
+export const { loginUser, addProfile, logoutUser } = userSlice.actions;
 
 export default userSlice.reducer;
