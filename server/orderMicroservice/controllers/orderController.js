@@ -1,4 +1,5 @@
 const { exec } = require("../../authMicroservice/helpers/db");
+const crypto = require("crypto");
 
 module.exports = {
 	getOrders: async (req, res) => {
@@ -22,17 +23,22 @@ module.exports = {
 
 	createOrder: async (req, res) => {
 		const { userId } = req.query;
-		const { orderId, OrderDetail } = req.body;
-		console.log(orderId);
+		let { OrderDetail } = req.body;
+
+		const OrderID = crypto.randomBytes(8).toString("hex");
+
+		OrderDetail = OrderDetail.map((det) => ({ OrderID, ...det }));
 		try {
 			const insOrder = await exec("create_order", {
 				userId,
+				id: OrderID,
 			});
-			if (insOrder) {
-				// const orderId = await exec("latest_order");
 
-				const orderDetail = await exec("createorder", { OrderDetail });
-				if (orderDetail) {
+			if (insOrder) {
+				const Details = JSON.stringify(OrderDetail);
+
+				const createorder = await exec("createorderdetails", { json: Details });
+				if (createorder) {
 					return res.status(201).json({
 						status: 201,
 						success: true,
@@ -41,7 +47,7 @@ module.exports = {
 				}
 			}
 		} catch (error) {
-			console.log(error.message);
+			// console.log(error.message);
 			res.status(500).json({
 				status: 500,
 				success: false,
