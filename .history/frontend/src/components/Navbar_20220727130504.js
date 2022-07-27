@@ -5,25 +5,20 @@ import { useDispatch, useSelector } from "react-redux";
 import { searchQuery } from "../redux/slices/productReducer";
 import ImageModal from "./user/ImageModal";
 import { logoutUser } from "../redux/slices/userReducer";
-import axios from "axios";
 
 function Navbar() {
   const dispatch = useDispatch();
   const [toggle, setToggle] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [searchInput, setSearchInput] = useState(false);
-  const [userName, setUserName] = useState("");
+  const { categories } = useSelector((state) => state.product);
   const { cart, favorites } = useSelector((state) => state.cart);
-  const { profileUpdated, email } = useSelector((state) => state.user);
+  const { profileUpdated } = useSelector((state) => state.user);
   const { loggedIn } = useSelector((state) => state.user);
   const search = () => {
     dispatch(searchQuery(searchInput));
   };
-  useEffect(() => {
-   axios
-     .post(" http://localhost:3016/admin", { email })
-     .then((response) => setUserName(response.data.data[0].fullName));
-})
+
   useEffect(() => {
     search();
   }, [searchInput]);
@@ -43,7 +38,7 @@ function Navbar() {
             >
               <path d="M13.5 22.1c1.8-7.2 6.3-10.8 13.5-10.8 10.8 0 12.15 8.1 17.55 9.45 3.6.9 6.75-.45 9.45-4.05-1.8 7.2-6.3 10.8-13.5 10.8-10.8 0-12.15-8.1-17.55-9.45-3.6-.9-6.75.45-9.45 4.05zM0 38.3c1.8-7.2 6.3-10.8 13.5-10.8 10.8 0 12.15 8.1 17.55 9.45 3.6.9 6.75-.45 9.45-4.05-1.8 7.2-6.3 10.8-13.5 10.8-10.8 0-12.15-8.1-17.55-9.45-3.6-.9-6.75.45-9.45 4.05z" />
             </svg>
-            <span className="font-semibold text-xs tracking-tight md:text-xl">
+            <span className="font-semibold text-xl tracking-tight">
               Tangerine Furniture
             </span>
           </div>{" "}
@@ -51,6 +46,7 @@ function Navbar() {
       </div>
       {/* <div className="flex items-center justify-center"> */}
       {!isAdmin && (
+
         <div className="input-group flex items-items justify-center">
           <input
             type="search"
@@ -88,7 +84,6 @@ function Navbar() {
           </div>
         )}
       </div> */}
-      <p className="hidden md:flex">{userName}</p>
 
       <div className="flex items-center justify-between gap-x-4">
         {!isAdmin && (
@@ -117,6 +112,7 @@ function Navbar() {
             )}
           </div>
         )}
+        <p>Vic</p>
         <div
           onClick={() => setToggle(!toggle)}
           className="dropdown flex relative"

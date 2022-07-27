@@ -16,7 +16,7 @@ function Cart() {
     loggedIn ? setSend(true) : navigate("/login");
   };
   
-	console.log(cart.length);
+	console.log(cart);
   return (
     <div className="container mx-auto ">
       <div className="md:flex shadow-md my-2">
@@ -86,22 +86,12 @@ function Cart() {
                 />
               </span>
             </div>
-            {cart.length > 0 ? (
-              <button
-                onClick={checkoutHere}
-                className="bg-blue-500 font-semibold hover:bg-indigo-600 py-3 text-sm text-white uppercase w-full"
-              >
-                Checkout
-              </button>
-            ) : (
-              <button
-                onClick={checkoutHere}
-								  className="bg-gray-500 cursor-not-allowed font-semibold  py-3 text-sm text-white uppercase w-full"
-								  disabled
-              >
-                Checkout
-              </button>
-            )}
+            <button
+              onClick={checkoutHere}
+              className="bg-blue-500 font-semibold hover:bg-indigo-600 py-3 text-sm text-white uppercase w-full"
+            >
+              Checkout
+            </button>
           </div>
         </div>
       </div>
