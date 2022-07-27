@@ -11,6 +11,7 @@ function Cart() {
 	let { cart } = useSelector((state) => state.cart);
 	const loggedIn = useSelector((state) => state.user.loggedIn);
 	const [send, setSend] = useState(false);
+console.log(loggedIn);
 	const checkoutHere = (e) => {
 		e.preventDefault();
 		loggedIn ? setSend(true) : navigate("/login");

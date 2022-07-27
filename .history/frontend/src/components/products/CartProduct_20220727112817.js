@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, { useEffect} from "react";
+import React, { useEffect } from "react";
 import CurrencyFormat from "react-currency-format";
 import { AiOutlineMinus, AiOutlinePlus } from "react-icons/ai";
 import { useDispatch, useSelector } from "react-redux";

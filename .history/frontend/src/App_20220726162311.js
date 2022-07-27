@@ -1,4 +1,9 @@
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Route,
+  Routes,
+  
+} from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import ProductGrid from "./components/products/productGrid";
@@ -28,7 +33,7 @@ import ProductDetails from "./components/products/ProductDetails";
 const App = () => {
   const dispatch = useDispatch();
 
-  let { isAdmin } = useSelector((state) => state.user);
+  let { isAdmin } =  useSelector((state) => state.user);
   const baseURL = "http://localhost:3005";
 
   useEffect(() => {
@@ -38,6 +43,7 @@ const App = () => {
     axios.get(`${baseURL}/products`).then((response) => {
       dispatch(loadProducts(response.data.records));
     });
+
   }, [dispatch]);
 
   return (

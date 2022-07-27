@@ -13,8 +13,9 @@ const DashBoard = () => {
         `${baseURL}/users?page=1&size=3&orderBy=fullName&orderDir=ASC&search=''`
       )
       .then((response) => {
+                console.log(response);
 
-        dispatch(updateCount(response.data.total));
+        dispatch(updateCount(response.data.filtered));
       });
     axios
       .get(`http://localhost:3005/products?page=1&size=3&search=''`)

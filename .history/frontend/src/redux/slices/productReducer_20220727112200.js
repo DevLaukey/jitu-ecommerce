@@ -22,12 +22,12 @@ const productSlice = createSlice({
     getProduct: (state, action) => {
       state.categories = action.payload;
     },
-    updateProductCount: (state, { payload }) => {
+    updateCount: (state, { payload }) => {
       state.count = payload;
     },
   },
 });
 
-export const { searchQuery, loadProducts, loadCategories, getProduct, updateProductCount } = productSlice.actions;
+export const { searchQuery, loadProducts, loadCategories, getProduct, updateCount } = productSlice.actions;
 
 export default productSlice.reducer;

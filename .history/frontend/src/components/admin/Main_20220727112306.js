@@ -13,13 +13,12 @@ const DashBoard = () => {
         `${baseURL}/users?page=1&size=3&orderBy=fullName&orderDir=ASC&search=''`
       )
       .then((response) => {
-
-        dispatch(updateCount(response.data.total));
+        dispatch(updateCount(response.data.filtered));
       });
     axios
       .get(`http://localhost:3005/products?page=1&size=3&search=''`)
       .then((response) => {
-        dispatch(updateProductCount(response.data.total));
+        dispatch(updateProductCount(response.data.filtered));
       });
   }, []);
   const customerCount = useSelector((state) => state.user.count);

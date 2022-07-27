@@ -1,38 +1,40 @@
 /* eslint-disable jsx-a11y/img-redundant-alt */
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import AdminModal from "./AdminModal";
-import EditModal from "./EditModal";
+import { useDispatch } from "react-redux";
 
+import CurrencyFormat from "react-currency-format";
+import ProductModal from "./ProductModal";
+import ProductEdit from "./ProductEdit";
 
-const baseURL = "http://localhost:3016";
+const baseURL = "http://localhost:3005";
 let rows,
   total = 0;
-const Customers = () => {
-  const [customers, setCustomers] = useState(null);
+const Products = () => {
+
+  const [products, setProducts] = useState(null);
   const [showModal, setShowModal] = useState(false);
   const [viewModal, setViewModal] = useState(false);
   const [searchInput, setSearchInput] = useState("");
+  const [productID, setProductID] = useState()
   const [user, setUser] = useState("");
   useEffect(() => {
-    setCustomers(null);
+    setProducts(null);
     axios
-      .get(
-        `${baseURL}/users?page=1&size=3&orderBy=fullName&orderDir=ASC&search=${searchInput}`
-      )
+      .get(`${baseURL}/products?page=1&size=3&search=${searchInput}`)
       .then((response) => {
+      
         total = response.data.filtered;
         rows = response.data.records.length;
-        setCustomers(response.data.records);
+        setProducts(response.data.records);
       });
-  }, [searchInput, user]);
-
+  }, [searchInput, user, productID, viewModal, showModal]);
   return (
     <>
       <div className="m-4 relative  w-full">
         <div className="flex items-center justify-between mb-4">
           <h2 className="text-lg md:text-2xl font-semibold text-black">
-            Customers
+            Products
           </h2>
           <div className="flex space-x-2 justify-center ">
             <button
@@ -40,7 +42,6 @@ const Customers = () => {
               onClick={() => setShowModal(true)}
               className="inline-flex items-center gap-x-2 px-6 py-1.5 bg-blue-500 text-white font-medium text-xs leading-loose uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-md transition duration-150 ease-in-out"
             >
-              {" "}
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 className="h-5 w-5"
@@ -55,12 +56,12 @@ const Customers = () => {
                   d="M12 4v16m8-8H4"
                 />
               </svg>
-              Add Customer
+              Add Products
             </button>
           </div>
         </div>
-        {showModal && <AdminModal setShowModal={setShowModal} />}
-        {viewModal && <EditModal setViewModal={setViewModal} user={user} />}
+        {showModal && <ProductModal setShowModal={setShowModal} />}
+        {viewModal && <ProductEdit setViewModal={setViewModal} user={user} proddId={productID} />}
         <div className="flex flex-col">
           <div className="overflow-x-auto sm:-mx-6 lg:-mx-8 max-w-full">
             <div className="py-2 inline-block min-w-full sm:px-6 lg:px-8">
@@ -145,19 +146,19 @@ const Customers = () => {
                         scope="col"
                         className="text-sm font-medium text-gray-900 px-3 py-2 text-left "
                       >
-                        Telephone
+                        Picture
                       </th>
                       <th
                         scope="col"
                         className="text-sm font-medium text-gray-900 px-3 py-2 text-left"
                       >
-                        Email
+                        Price
                       </th>
                       <th
                         scope="col"
                         className="text-sm font-medium text-gray-900 px-3 py-2 text-left flex items-center"
                       >
-                        # Orders
+                        Description
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
                           class="ml-1 w-3 h-3"
@@ -179,34 +180,61 @@ const Customers = () => {
                         scope="col"
                         className="text-sm font-medium text-gray-900 px-3 py-2 text-center"
                       >
+                        Category
+                      </th>
+                      <th
+                        scope="col"
+                        className="text-sm font-medium text-gray-900 px-3 py-2 text-center"
+                      >
                         Action
                       </th>
                     </tr>
                   </thead>
                   <tbody>
-                    {customers
-                      ? customers.map((customer, index) => (
-                          <tr key={customer.userId} className="border-b">
+                    {products
+                      ? products.map((product, index) => (
+                          <tr key={product.productId} className="border-b">
                             <td className="px-3 py-3 whitespace-nowrap text-sm font-medium text-gray-900">
                               {index + 1}
                             </td>
 
                             <td className="text-sm text-zinc-900 font-light px-3 whitespace-nowrap">
-                              {customer.fullName}
+                              {product.productName}
                             </td>
                             <td className="text-sm text-zinc-900 font-light px-3 whitespace-nowrap">
-                              {customer.telephone}
+                              <img
+                                className=" h-24"
+                                src={product.imageUrl}
+                                alt={product.productName}
+                              />
                             </td>
                             <td className="text-sm text-zinc-900 font-light px-3 whitespace-nowrap">
-                              {customer.email}
+                              <CurrencyFormat
+                                value={product.price}
+                                displayType={"text"}
+                                thousandSeparator={true}
+                                prefix={"Ksh"}
+                              />
                             </td>
                             <td className="text-sm text-zinc-900 font-light px-3 whitespace-nowrap text-center">
-                              2
+                              {product.description}
                             </td>
-
+                            {product.inStock ? (
+                              <td className="text-sm text-zinc-900 font-light px-3 whitespace-nowrap">
+                                <button className="inline-block px-4 py-0.5 rounded-full bg-orange-50 text-green-600 font-medium text-sm leading-loose capitalize">
+                                  In Stock
+                                </button>
+                              </td>
+                            ) : (
+                              <td className="text-sm text-zinc-900 font-light px-3 whitespace-nowrap">
+                                <button className="inline-block px-4 py-0.5 rounded-full bg-orange-50 text-red-600 font-medium text-sm leading-loose capitalize">
+                                  Out of Stock
+                                </button>
+                              </td>
+                            )}
                             <td className="text-sm text-zinc-900 font-light px-3 whitespace-nowrap">
-                              <button className="inline-block px-4 py-0.5 rounded-full bg-orange-50 text-orange-600 font-medium text-sm leading-loose capitalize">
-                                Active
+                              <button className="inline-block px-4 py-0.5 rounded-full bg-orange-50 text-green-600 font-medium text-sm leading-loose capitalize">
+                                {product.categoryId}
                               </button>
                             </td>
                             <td className="text-sm text-zinc-900 font-light px-3 whitespace-nowrap">
@@ -215,11 +243,12 @@ const Customers = () => {
                               <p
                                 onClick={() => {
                                   setViewModal(true);
-                                  setUser(customer.email);
+                                setUser(product.productName);
+                               setProductID(product.productID);
                                 }}
                                 className="hover:cursor-pointer mr-3 inline-block px-4 py-1 bg-blue-500 text-white font-medium text-xs leading-loose uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-md transition duration-150 ease-in-out"
-                              >
-                                Edit
+                            >
+                              Edit
                               </p>
                             </td>
                           </tr>
@@ -229,8 +258,8 @@ const Customers = () => {
                 </table>
                 <div className="flex items-center justify-between mt-4">
                   <p className="text-sm">
-                    Showing <span className="font-semibold">1</span> to{" "}
-                    <span className="font-semibold">{rows}</span> of{" "}
+                    Showing <span className="font-semibold">1</span> to
+                    <span className="font-semibold">{rows}</span> of
                     <span className="font-semibold">{total}</span> entries
                   </p>
                   <div className="flex space-x-1 justify-center ">
@@ -263,4 +292,4 @@ const Customers = () => {
   );
 };
 
-export default Customers;
+export default Products;
