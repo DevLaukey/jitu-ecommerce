@@ -5,20 +5,25 @@ import { useDispatch, useSelector } from "react-redux";
 import { searchQuery } from "../redux/slices/productReducer";
 import ImageModal from "./user/ImageModal";
 import { logoutUser } from "../redux/slices/userReducer";
+import axios from "axios";
 
 function Navbar() {
 	const dispatch = useDispatch();
 	const [toggle, setToggle] = useState(false);
 	const [showModal, setShowModal] = useState(false);
 	const [searchInput, setSearchInput] = useState(false);
-	const { categories } = useSelector((state) => state.product);
+	const [userName, setUserName] = useState("");
 	const { cart, favorites } = useSelector((state) => state.cart);
-	const { profileUpdated } = useSelector((state) => state.user);
+	const { profileUpdated, email } = useSelector((state) => state.user);
 	const { loggedIn } = useSelector((state) => state.user);
 	const search = () => {
 		dispatch(searchQuery(searchInput));
 	};
-
+	useEffect(() => {
+		axios
+			.post(" http://localhost:3016/admin", { email })
+			.then((response) => setUserName(response.data.data[0].fullName));
+	});
 	useEffect(() => {
 		search();
 	}, [searchInput]);
@@ -37,7 +42,7 @@ function Navbar() {
 							xmlns="http://www.w3.org/2000/svg">
 							<path d="M13.5 22.1c1.8-7.2 6.3-10.8 13.5-10.8 10.8 0 12.15 8.1 17.55 9.45 3.6.9 6.75-.45 9.45-4.05-1.8 7.2-6.3 10.8-13.5 10.8-10.8 0-12.15-8.1-17.55-9.45-3.6-.9-6.75.45-9.45 4.05zM0 38.3c1.8-7.2 6.3-10.8 13.5-10.8 10.8 0 12.15 8.1 17.55 9.45 3.6.9 6.75-.45 9.45-4.05-1.8 7.2-6.3 10.8-13.5 10.8-10.8 0-12.15-8.1-17.55-9.45-3.6-.9-6.75.45-9.45 4.05z" />
 						</svg>
-						<span className="font-semibold text-xl tracking-tight">Tangerine Furniture</span>
+						<span className="font-semibold text-xs tracking-tight md:text-xl">Tangerine Furniture</span>
 					</div>{" "}
 				</Link>
 			</div>
@@ -57,28 +62,10 @@ function Navbar() {
 						id="basic-addon2">
 						<BsSearch onClick={search} />
 					</span>
-					{/* </div> */}
 				</div>
 			)}
-			{/* <div className="flex justify-center">
-        {!isAdmin && (
-          <div className=" xl:w-96">
-            <select
-              aria-label="select categories"
-              className="form-select appearance-none block px-3 py-1.5 text-base font-light text-zinc-700 bg-white bg-clip-padding bg-no-repeat border border-solid border-zinc-300 rounded transition ease-in-out m-0 focus:text-zinc-700 focus:bg-white focus:border-blue-600 focus:outline-none"
-            >
-              <option selected>Categories</option>
-              {categories
-                ? categories.map((cat, index) => (
-                    <option key={index} value={cat.categoryId}>
-                      {cat.categoryName}
-                    </option>
-                  ))
-                : ""}
-            </select>
-          </div>
-        )}
-      </div> */}
+
+			<p className="hidden md:flex">{userName}</p>
 
 			<div className="flex items-center justify-between gap-x-4">
 				{!isAdmin && (

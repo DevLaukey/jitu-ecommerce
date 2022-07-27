@@ -5,22 +5,14 @@ import { useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import CartProduct from "./CartProduct";
 
-import useToken from "../../useToken";
-import Login from "../logins/Login";
-
 function Cart() {
 	const navigate = useNavigate();
-	const { token, setToken } = useToken();
 	let { cart } = useSelector((state) => state.cart);
-	// const loggedIn = useSelector((state) => state.user.loggedIn);
-	// const [send, setSend] = useState(false);
+	const loggedIn = useSelector((state) => state.user.loggedIn);
+	const [send, setSend] = useState(false);
 	const checkoutHere = (e) => {
 		e.preventDefault();
-		if (!token) {
-			navigate("/login");
-			// return <Login setToken={setToken} />;
-		}
-		// token ? setSend(true) : navigate("/login");
+		loggedIn ? setSend(true) : navigate("/login");
 	};
 
 	return (
@@ -40,8 +32,7 @@ function Cart() {
 						<h3 className="font-semibold  text-gray-600 text-xs uppercase md:w-1/5 text-center">Total</h3>
 					</div>
 					{cart.map((item) => (
-						// <CartProduct product={item} key={item.productID} send={send} />
-						<CartProduct product={item} key={item.productID} />
+						<CartProduct product={item} key={item.productID} send={send} />
 					))}
 					<Link to="/" className="flex w-60 gap-x-3 font-semibold items-center text-indigo-600 text mt-10">
 						<BsArrowLeft />
