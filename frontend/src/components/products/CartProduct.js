@@ -26,21 +26,21 @@ function CartProduct({ product, send }) {
 
 	useEffect(() => {
 		axios.post(" http://localhost:3016/admin", { email }).then((response) => setUserId(response.data.data[0].userId));
-		// send &&
-		axios
-			.post(`http://localhost:5016/add-order?userId=${userId}`, {
-				OrderDetail: OrderDetail,
-			})
-			.then((response) => {
-				toast.success(response.data.message, {
-					position: toast.POSITION.TOP_RIGHT,
+		send &&
+			axios
+				.post(`http://localhost:5016/add-order?userId=${userId}`, {
+					OrderDetail: OrderDetail,
+				})
+				.then((response) => {
+					toast.success(response.data.message, {
+						position: toast.POSITION.TOP_RIGHT,
+					});
+					navigate("/");
+					dispatch(clearCart());
+				})
+				.catch((err, response) => {
+					console.log(err);
 				});
-				navigate("/");
-				dispatch(clearCart());
-			})
-			.catch((err, response) => {
-				console.log(err);
-			});
 	}, [send, dispatch, navigate]);
 
 	const removeItems = () => {
