@@ -2,7 +2,7 @@ import axios from "axios";
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { updateCount } from "../../redux/slices/userReducer";
-import { updateProductCount } from "../../redux/slices/productReducer";
+
 const DashBoard = () => {
   const baseURL = "http://localhost:3016";
   const dispatch = useDispatch();
@@ -13,13 +13,7 @@ const DashBoard = () => {
         `${baseURL}/users?page=1&size=3&orderBy=fullName&orderDir=ASC&search=''`
       )
       .then((response) => {
-
-        dispatch(updateCount(response.data.total));
-      });
-    axios
-      .get(`http://localhost:3005/products?page=1&size=3&search=''`)
-      .then((response) => {
-        dispatch(updateProductCount(response.data.total));
+        dispatch(updateCount(response.data.records.length));
       });
   }, []);
   const customerCount = useSelector((state) => state.user.count);

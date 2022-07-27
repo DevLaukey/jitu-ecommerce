@@ -52,7 +52,7 @@ const ProductCard = ({ product }) => {
 					<div className="grid grid-cols-2 gap-3">
 						<div className="hover:cursor-pointer col-span-1">
 							<Link to={`/products/${product?.productName}`}>
-								<img src={product?.imageUrl} alt={product?.productName} className="w-max h-3/4 rounded" />
+								<img src={product?.imageUrl} alt={product?.productName} className="w-max h-52 rounded" />
 							</Link>
 						</div>
 						<div className="col-span-1 space-y-4 md:flex-col md:gap-y-6 sm:flex sm:space-y-0 sm:space-x-4 relative">

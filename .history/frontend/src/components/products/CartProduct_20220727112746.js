@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, { useEffect} from "react";
+import React, { useEffect } from "react";
 import CurrencyFormat from "react-currency-format";
 import { AiOutlineMinus, AiOutlinePlus } from "react-icons/ai";
 import { useDispatch, useSelector } from "react-redux";
@@ -22,8 +22,7 @@ function CartProduct({ product, send }) {
 			UnitPrice: cartItem?.price * cartItem?.quantity,
 		},
 	];
-
-	const userId = 1;
+	const userId = 7;
 	console.log(OrderDetail);
 	useEffect(() => {
 		send &&
@@ -39,7 +38,7 @@ function CartProduct({ product, send }) {
 				.catch((err, response) => {
 					console.log(err);
 				});
-	}, [send, dispatch,navigate]);
+	}, [send, dispatch, orderDetail,navigate]);
 
 	const removeItems = () => {
 		if (cartItem?.quantity > 1) {

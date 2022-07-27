@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Route, Routes, useParams } from "react-router-dom";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import ProductGrid from "./components/products/productGrid";
@@ -10,7 +10,6 @@ import DashBoard from "./components/admin/Main";
 import Customers from "./components/admin/Customers";
 import Products from "./components/admin/Products";
 import Orders from "./components/admin/Order";
-import Messages from "./components/admin/Messages";
 import Settings from "./components/admin/Settings";
 import Cart from "./components/products/Cart";
 import Bookmark from "./components/products/Bookmark";
@@ -53,7 +52,6 @@ const App = () => {
 						<Route path="admin/products" element={<Products />} />
 						<Route path="admin/categories" element={<Categories />} />
 						<Route path="admin/orders" element={<Orders />} />
-						<Route path="admin/messages" element={<Messages />} />
 						<Route path="admin/settings" element={<Settings />} />
 					</Route>
 				) : (

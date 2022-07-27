@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, { useEffect} from "react";
+import React, { useEffect } from "react";
 import CurrencyFormat from "react-currency-format";
 import { AiOutlineMinus, AiOutlinePlus } from "react-icons/ai";
 import { useDispatch, useSelector } from "react-redux";
@@ -23,12 +23,11 @@ function CartProduct({ product, send }) {
 		},
 	];
 
-	const userId = 1;
 	console.log(OrderDetail);
 	useEffect(() => {
 		send &&
 			axios
-				.post(`http://localhost:5016/add-order?userId=${userId}`, { OrderDetail: OrderDetail })
+				.post(`http://localhost:5016/add-order?userId=1`, { OrderDetail: OrderDetail })
 				.then((response) => {
 					toast.success(response.data.message, {
 						position: toast.POSITION.TOP_RIGHT,
@@ -39,7 +38,7 @@ function CartProduct({ product, send }) {
 				.catch((err, response) => {
 					console.log(err);
 				});
-	}, [send, dispatch,navigate]);
+	}, [send]);
 
 	const removeItems = () => {
 		if (cartItem?.quantity > 1) {

@@ -22,8 +22,7 @@ function CartProduct({ product, send }) {
 			UnitPrice: cartItem?.price * cartItem?.quantity,
 		},
 	];
-
-	const userId = 1;
+	const userId = 7;
 	console.log(OrderDetail);
 	useEffect(() => {
 		send &&
