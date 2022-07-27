@@ -25,5 +25,5 @@ app.use((err, req, res, next) => {
 });
 
 app.listen(port, () => {
-	console.log(`running port: ${port}`);
+	console.log(`products microserveice running port: ${port}`);
 });
