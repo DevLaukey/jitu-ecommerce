@@ -1,32 +1,39 @@
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import axios from "axios";
+import { useEffect } from "react";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import ProductGrid from "./components/products/productGrid";
+import { useDispatch, useSelector } from "react-redux";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 
+import { loadCategories, loadProducts } from "./redux/slices/productReducer";
+import useToken from "./useToken";
+
+import AdminWrapper from "./pages/AdminWrapper";
 import DashBoard from "./components/admin/Main";
 import Customers from "./components/admin/Customers";
 import Products from "./components/admin/Products";
+import Categories from "./components/admin/Categories";
 import Orders from "./components/admin/Order";
 import Settings from "./components/admin/Settings";
+
 import Cart from "./components/products/Cart";
 import Bookmark from "./components/products/Bookmark";
-import Error from "./components/Error";
 
-import AdminWrapper from "./pages/AdminWrapper";
 import Login from "./components/logins/Login";
 import SignUp from "./components/logins/SignUp";
-import { loadCategories, loadProducts } from "./redux/slices/productReducer";
-import axios from "axios";
-import { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+
 import ProductDetails from "./components/products/ProductDetails";
-import Categories from "./components/admin/Categories";
+import ProductGrid from "./components/products/productGrid";
+
+import Error from "./components/Error";
 
 const App = () => {
 	const dispatch = useDispatch();
+
+	const { token, setToken } = useToken();
 
 	let { isAdmin } = useSelector((state) => state.user);
 	const baseURL = "http://localhost:3005";
@@ -57,13 +64,13 @@ const App = () => {
 				) : (
 					<>
 						<Route path="/" element={<ProductGrid />} />
-						<Route path="/cart" element={<Cart />} />
+						<Route path="/cart" element={<Cart token={token} />} />
 						<Route path="/products/:productName" element={<ProductDetails />} />
 						<Route path="/bookmark" element={<Bookmark />} />
 					</>
 				)}
-				<Route path="/login" element={<Login />} />
-				<Route path="/signup" element={<SignUp />} />
+				<Route path="/login" element={<Login setToken={setToken} />} />
+				<Route path="/signup" element={<SignUp setToken={setToken} />} />
 
 				<Route path="*" element={<Error />} />
 			</Routes>

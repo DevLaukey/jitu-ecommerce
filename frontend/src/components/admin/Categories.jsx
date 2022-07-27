@@ -1,8 +1,8 @@
 /* eslint-disable jsx-a11y/img-redundant-alt */
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import ProductModal from "./ProductModal";
 import ProductEdit from "./ProductEdit";
+import AddCategory from "./AddCategory";
 
 const baseURL = "http://localhost:3005";
 
@@ -42,7 +42,7 @@ const Categories = () => {
 						</button>
 					</div>
 				</div>
-				{showModal && <ProductModal setShowModal={setShowModal} />}
+				{showModal && <AddCategory setShowModal={setShowModal} />}
 				{viewModal && <ProductEdit setViewModal={setViewModal} user={user} proddId={productID} />}
 				<div className="flex flex-col">
 					<div className="overflow-x-auto sm:-mx-6 lg:-mx-8 max-w-full">

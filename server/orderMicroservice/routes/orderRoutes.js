@@ -1,9 +1,10 @@
 const express = require("express");
+const { isAuthenticated } = require("../../authMicroservice/middlewares/authMiddleware");
 const router = express.Router();
 
 const { getOrders, createOrder } = require("../controllers/orderController");
 
 router.get("/orders", getOrders);
-router.post("/add-order", createOrder);
+router.post("/add-order", isAuthenticated, createOrder);
 
 module.exports = router;

@@ -5,7 +5,7 @@ import { toast, ToastContainer } from "react-toastify";
 import { loginUser } from "../../redux/slices/userReducer";
 import { useDispatch } from "react-redux";
 
-function Login() {
+function Login({ setToken }) {
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
 	const [email, setEmail] = useState();
@@ -17,11 +17,12 @@ function Login() {
 			.post(`http://localhost:3016/signin`, { email, password })
 			.then((response) => {
 				// console.log(response.data.token);
-				localStorage.setItem("token", JSON.stringify(response.data.token));
+				// localStorage.setItem("token", JSON.stringify(response.data.token));
 				toast.success(response.data.message, {
 					position: toast.POSITION.TOP_RIGHT,
 				});
 				dispatch(loginUser(email));
+				setToken(response.data.token);
 				navigate("/", { replace: true });
 			})
 			.catch((error) => {
