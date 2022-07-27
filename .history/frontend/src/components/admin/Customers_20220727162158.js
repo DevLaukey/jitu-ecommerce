@@ -14,12 +14,8 @@ const Customers = () => {
   const [showModal, setShowModal] = useState(false);
   const [viewModal, setViewModal] = useState(false);
   const [searchInput, setSearchInput] = useState("");
-  const [maxPage, setMaxPage] = React.useState(0);
-  const [size, setSize] = useState(10)
+    const [maxPage, setMaxPage] = React.useState(0);
   const [user, setUser] = useState("");
-  const handleSize = (e) => {
-    setSize(e.value);
-  }
   useEffect(() => {
     setCustomers(null);
     axios
@@ -85,16 +81,14 @@ const Customers = () => {
                     </label>
                     <select
                       id="entries"
-                      onChange={handleSize}
-                      value={size}
                       class="bg-zinc-50 w-16 text-right text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block py-1.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                     >
-                      <option selected="" value={10}>
+                      <option selected="" value="ten">
                         10
                       </option>
-                      <option value={15}>15</option>
-                      <option value={20}>20</option>
-                      <option value={25}>25</option>
+                      <option value="fifteen">15</option>
+                      <option value="twenty">20</option>
+                      <option value="twent-five">25</option>
                     </select>
                     <p class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400">
                       entries
@@ -245,13 +239,7 @@ const Customers = () => {
                     <span className="font-semibold">{rows}</span> of{" "}
                     <span className="font-semibold">{total}</span> entries
                   </p>
-                  {/* <Pagination
-                    size={size}
-                    page={page}
-                    maxPage={maxPage}
-                    previousPageNumber={() => dispatch(previousPageNumber())}
-                    nextPageNumber={() => dispatch(nextPageNumber())}
-                  /> */}
+                  <Pagination />
                 </div>
               </div>
             </div>

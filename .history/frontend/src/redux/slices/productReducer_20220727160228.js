@@ -39,6 +39,6 @@ const productSlice = createSlice({
   },
 });
 
-export const { searchQuery, loadProducts, loadCategories, getProduct, updateProductCount , previousPageNumber, nextPageNumber, setPageNumber} = productSlice.actions;
+export const { searchQuery, loadProducts, loadCategories, getProduct, updateProductCount , previousPageNumber, nextPageNumber} = productSlice.actions;
 
 export default productSlice.reducer;

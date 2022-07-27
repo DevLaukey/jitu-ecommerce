@@ -27,18 +27,15 @@ const productSlice = createSlice({
       state.count = payload;
     },
     previousPageNumber: (state) => {
-      state.pageNumber>1 && state.pageNumber--
+      state.pageNumber>=0 && state.pageNumber--
     },
     nextPageNumber: (state) => {
        state.pageNumber++;
 
-    },
-    setPageNumber: (state, { payload })=>{
-      state.pageNumber = payload
-    },
+    }
   },
 });
 
-export const { searchQuery, loadProducts, loadCategories, getProduct, updateProductCount , previousPageNumber, nextPageNumber, setPageNumber} = productSlice.actions;
+export const { searchQuery, loadProducts, loadCategories, getProduct, updateProductCount , previousPageNumber, nextPageNumber} = productSlice.actions;
 
 export default productSlice.reducer;

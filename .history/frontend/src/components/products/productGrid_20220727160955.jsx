@@ -29,7 +29,8 @@ const ProductGrid = () => {
       )
       .then((response) => {
         setProducts(response.data.records);
-        setMaxPage(Math.ceil(response.data.filtered / response.data.size));
+        setMaxPage(Math.ceil(
+          response.data.filtered / response.data.size));
         // total = response.data.filtered;
         // rows = response.data.records.length;
       });

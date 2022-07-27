@@ -28,13 +28,16 @@ const ProductGrid = () => {
         }`
       )
       .then((response) => {
-        setProducts(response.data.records);
-        setMaxPage(Math.ceil(response.data.filtered / response.data.size));
+        setProducts(response.data.records.filtered);
+        setMaxPage(
+          response.data.records.filtered / response.data.records.size);
+        console.log(response.data);
         // total = response.data.filtered;
         // rows = response.data.records.length;
       });
   }, [search, page]);
 
+	console.log(maxPage);
   return (
     <>
       <Slider />
