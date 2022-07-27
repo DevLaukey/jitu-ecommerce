@@ -245,13 +245,13 @@ const Customers = () => {
                     <span className="font-semibold">{rows}</span> of{" "}
                     <span className="font-semibold">{total}</span> entries
                   </p>
-                  {/* <Pagination
+                  <Pagination
                     size={size}
                     page={page}
                     maxPage={maxPage}
                     previousPageNumber={() => dispatch(previousPageNumber())}
                     nextPageNumber={() => dispatch(nextPageNumber())}
-                  /> */}
+                  />
                 </div>
               </div>
             </div>

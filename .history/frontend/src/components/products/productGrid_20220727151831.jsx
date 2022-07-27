@@ -11,10 +11,10 @@ import {
 
 const ProductGrid = () => {
   const [products, setProducts] = React.useState([]);
-  const [maxPage, setMaxPage] = React.useState(0);
   const dispatch = useDispatch();
   const search = useSelector((state) => state.product.searchQuery);
   const page = useSelector((state) => state.product.pageNumber);
+const maxPage = 1
   const size = 10;
   const baseURL = "http://localhost:3005";
 
@@ -28,8 +28,8 @@ const ProductGrid = () => {
         }`
       )
       .then((response) => {
-        setProducts(response.data.records);
-        setMaxPage(Math.ceil(response.data.filtered / response.data.size));
+		  setProducts(response.data.records);
+		  console.log(response.data);
         // total = response.data.filtered;
         // rows = response.data.records.length;
       });
@@ -58,10 +58,10 @@ const ProductGrid = () => {
       </div>
       <Pagination
         size={size}
-        page={page}
-        maxPage={maxPage}
-        previousPageNumber={() => dispatch(previousPageNumber())}
-        nextPageNumber={() => dispatch(nextPageNumber())}
+			  page={page}
+			  maxPage= {maxPage}
+        previousPageNumber={()=>dispatch(previousPageNumber())}
+        nextPageNumber={()=>dispatch(nextPageNumber())}
       />
     </>
   );

@@ -15,7 +15,7 @@ const ProductGrid = () => {
   const dispatch = useDispatch();
   const search = useSelector((state) => state.product.searchQuery);
   const page = useSelector((state) => state.product.pageNumber);
-  const size = 10;
+  const size = 2;
   const baseURL = "http://localhost:3005";
 
   useEffect(() => {
@@ -29,12 +29,14 @@ const ProductGrid = () => {
       )
       .then((response) => {
         setProducts(response.data.records);
-        setMaxPage(Math.ceil(response.data.filtered / response.data.size));
+        setMaxPage(Math.ceil(
+          response.data.filtered / response.data.size));
         // total = response.data.filtered;
         // rows = response.data.records.length;
       });
   }, [search, page]);
 
+  console.log(Math.ceil(maxPage));
   return (
     <>
       <Slider />

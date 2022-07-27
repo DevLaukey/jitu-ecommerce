@@ -13,7 +13,6 @@ module.exports = {
 			await exec("verify_exists", {
 				email,
 			}).then((response) => {
-				console.log(response.recordset);
 				return res.status(200).json({
 					status: 200,
 					success: true,
