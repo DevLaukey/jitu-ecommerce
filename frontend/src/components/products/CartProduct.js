@@ -23,7 +23,6 @@ function CartProduct({ product, send }) {
 		},
 	];
 
-	console.log(OrderDetail);
 	useEffect(() => {
 		send &&
 			axios

@@ -1,36 +1,29 @@
+/* eslint-disable jsx-a11y/img-redundant-alt */
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { useDispatch } from "react-redux";
-import { updateCount } from "../../redux/slices/productReducer";
-import CurrencyFormat from "react-currency-format";
 import ProductModal from "./ProductModal";
 import ProductEdit from "./ProductEdit";
 
 const baseURL = "http://localhost:3005";
-let rows,
-	total = 0;
-const Products = () => {
-	const dispatch = useDispatch();
-	const [products, setProducts] = useState(null);
+
+const Categories = () => {
+	const [categories, setCategories] = useState(null);
 	const [showModal, setShowModal] = useState(false);
 	const [viewModal, setViewModal] = useState(false);
 	const [searchInput, setSearchInput] = useState("");
 	const [productID, setProductID] = useState();
 	const [user, setUser] = useState("");
 	useEffect(() => {
-		setProducts(null);
-		axios.get(`${baseURL}/products?page=1&size=3&search=${searchInput}`).then((response) => {
-			dispatch(updateCount(response.data.filtered));
-			total = response.data.filtered;
-			rows = response.data.records.length;
-			setProducts(response.data.records);
+		setCategories(null);
+		axios.get(`${baseURL}/categories`).then((response) => {
+			setCategories(response.data.categories);
 		});
 	}, [searchInput, user, productID, viewModal, showModal]);
 	return (
 		<>
 			<div className="m-4 relative  w-full">
 				<div className="flex items-center justify-between mb-4">
-					<h2 className="text-lg md:text-2xl font-semibold text-black">Products</h2>
+					<h2 className="text-lg md:text-2xl font-semibold text-black">Categories</h2>
 					<div className="flex space-x-2 justify-center ">
 						<button
 							type="button"
@@ -45,7 +38,7 @@ const Products = () => {
 								strokeWidth="2">
 								<path strokeLinecap="round" strokeLinejoin="round" d="M12 4v16m8-8H4" />
 							</svg>
-							Add Products
+							Add Categories
 						</button>
 					</div>
 				</div>
@@ -116,90 +109,32 @@ const Products = () => {
 											<th
 												scope="col"
 												className="text-sm font-medium text-gray-900 px-3 py-2 text-left flex items-center">
-												Name
-											</th>
-											<th scope="col" className="text-sm font-medium text-gray-900 px-3 py-2 text-left ">
-												Picture
-											</th>
-											<th scope="col" className="text-sm font-medium text-gray-900 px-3 py-2 text-left">
-												Price
-											</th>
-											<th
-												scope="col"
-												className="text-sm font-medium text-gray-900 px-3 py-2 text-left flex items-center">
-												Description
-												<svg
-													xmlns="http://www.w3.org/2000/svg"
-													class="ml-1 w-3 h-3"
-													aria-hidden="true"
-													fill="currentColor"
-													viewBox="0 0 320 512">
-													<path d="M27.66 224h264.7c24.6 0 36.89-29.78 19.54-47.12l-132.3-136.8c-5.406-5.406-12.47-8.107-19.53-8.107c-7.055 0-14.09 2.701-19.45 8.107L8.119 176.9C-9.229 194.2 3.055 224 27.66 224zM292.3 288H27.66c-24.6 0-36.89 29.77-19.54 47.12l132.5 136.8C145.9 477.3 152.1 480 160 480c7.053 0 14.12-2.703 19.53-8.109l132.3-136.8C329.2 317.8 316.9 288 292.3 288z" />
-												</svg>
-											</th>
-
-											<th scope="col" className="text-sm font-medium text-gray-900 px-3 py-2 text-left">
-												Status
-											</th>
-											<th scope="col" className="text-sm font-medium text-gray-900 px-3 py-2 text-center">
 												Category
 											</th>
+
 											<th scope="col" className="text-sm font-medium text-gray-900 px-3 py-2 text-center">
 												Action
 											</th>
 										</tr>
 									</thead>
 									<tbody>
-										{products
-											? products.map((product, index) => (
-													<tr key={product.productId} className="border-b">
+										{categories
+											? categories.map((category, index) => (
+													<tr key={category.productId} className="border-b">
 														<td className="px-3 py-3 whitespace-nowrap text-sm font-medium text-gray-900">
 															{index + 1}
 														</td>
 
 														<td className="text-sm text-zinc-900 font-light px-3 whitespace-nowrap">
-															{product.productName}
+															{category.categoryName}
 														</td>
+
 														<td className="text-sm text-zinc-900 font-light px-3 whitespace-nowrap">
-															<img className=" h-24" src={product.imageUrl} alt={product.productName} />
-														</td>
-														<td className="text-sm text-zinc-900 font-light px-3 whitespace-nowrap">
-															<CurrencyFormat
-																value={product.price}
-																displayType={"text"}
-																thousandSeparator={true}
-																prefix={"Ksh"}
-															/>
-														</td>
-														<td className="text-sm text-zinc-900 font-light px-3 whitespace-nowrap text-center">
-															{product.description}
-														</td>
-														{product.inStock ? (
-															<td className="text-sm text-zinc-900 font-light px-3 whitespace-nowrap">
-																<button className="inline-block px-4 py-0.5 rounded-full bg-orange-50 text-green-600 font-medium text-sm leading-loose capitalize">
-																	In Stock
-																</button>
-															</td>
-														) : (
-															<td className="text-sm text-zinc-900 font-light px-3 whitespace-nowrap">
-																<button className="inline-block px-4 py-0.5 rounded-full bg-orange-50 text-red-600 font-medium text-sm leading-loose capitalize">
-																	Out of Stock
-																</button>
-															</td>
-														)}
-														<td className="text-sm text-zinc-900 font-light px-3 whitespace-nowrap">
-															<button className="inline-block px-4 py-0.5 rounded-full bg-orange-50 text-green-600 font-medium text-sm leading-loose capitalize">
-																{product.categoryId}
-															</button>
-														</td>
-														<td className="text-sm text-zinc-900 font-light px-3 whitespace-nowrap">
-															{/* <button onClick={() => setViewModal(true)}>View</button> */}
-															{/* {viewModal ? ViewCustomer() : null} */}
 															<p
 																onClick={() => {
 																	setViewModal(true);
-																	setUser(product.productName);
-																	setProductID(product.productID);
+																	setUser(category.categoryName);
+																	setProductID(category.productID);
 																}}
 																className="hover:cursor-pointer mr-3 inline-block px-4 py-1 bg-blue-500 text-white font-medium text-xs leading-loose uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-md transition duration-150 ease-in-out">
 																Edit
@@ -210,30 +145,6 @@ const Products = () => {
 											: "Loading"}
 									</tbody>
 								</table>
-								<div className="flex items-center justify-between mt-4">
-									<p className="text-sm">
-										Showing <span className="font-semibold">1</span> to
-										<span className="font-semibold">{rows}</span> of
-										<span className="font-semibold">{total}</span> entries
-									</p>
-									<div className="flex space-x-1 justify-center ">
-										<button
-											type="button"
-											className="inline-block px-3 py-1.5 bg-zinc-500 text-white font-medium text-xs uppercase rounded hover:bg-zinc-700 hover:shadow-lg focus:bg-zinc-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-zinc-800 active:shadow-md transition duration-150 ease-in-out">
-											Previous
-										</button>
-										<button
-											type="button"
-											className="inline-block px-3 py-1.5 bg-zinc-500 text-white font-medium text-xs rounded hover:bg-zinc-700 hover:shadow-lg focus:bg-zinc-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-zinc-800 active:shadow-md transition duration-150 ease-in-out">
-											1
-										</button>
-										<button
-											type="button"
-											className="inline-block px-3 py-1.5 bg-zinc-500 text-white font-medium text-xs uppercase rounded hover:bg-zinc-700 hover:shadow-lg focus:bg-zinc-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-zinc-800 active:shadow-md transition duration-150 ease-in-out">
-											Next
-										</button>
-									</div>
-								</div>
 							</div>
 						</div>
 					</div>
@@ -243,4 +154,4 @@ const Products = () => {
 	);
 };
 
-export default Products;
+export default Categories;
