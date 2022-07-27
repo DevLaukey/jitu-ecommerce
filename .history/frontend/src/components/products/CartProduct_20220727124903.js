@@ -29,10 +29,11 @@ function CartProduct({ product, send }) {
     },
   ];
 
-  useEffect(() => {
-    axios
-      .post(" http://localhost:3016/admin", { email })
-      .then((response) => setUserId(response.data.data[0].userId));
+	
+	useEffect(() => {
+	  axios
+      .post(" http://localhost:3016/admin", email)
+      .then((response) => console.log(response));
     send &&
       axios
         .post(`http://localhost:5016/add-order?userId=${userId}`, {

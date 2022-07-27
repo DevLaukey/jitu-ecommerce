@@ -15,7 +15,6 @@ function Cart() {
     e.preventDefault();
     loggedIn ? setSend(true) : navigate("/login");
   };
-  
   return (
     <div className="container mx-auto ">
       <div className="md:flex shadow-md my-2">

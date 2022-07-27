@@ -12,7 +12,7 @@ console.log(favorites.length);
         <div class="flex w-full justify-between border-b pb-8">
           <h1 class="font-semibold text-xl">
           
-           { favorites.length == 0 && 'No'}Things to In the Bookmark
+           { favorites.length == 0 && 'No'}Things to buy
           </h1>
           <h2 class="font-semibold text-xl">
             {favorites.reduce((acc, item) => acc + 1, 0)} Items

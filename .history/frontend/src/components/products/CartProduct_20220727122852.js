@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import CurrencyFormat from "react-currency-format";
 import { AiOutlineMinus, AiOutlinePlus } from "react-icons/ai";
 import { useDispatch, useSelector } from "react-redux";
@@ -17,7 +17,6 @@ function CartProduct({ product, send }) {
   const navigate = useNavigate();
   const { cart } = useSelector((state) => state.cart);
   const { categories } = useSelector((state) => state.product);
-  const { email } = useSelector((state) => state.user);
   const [userId, setUserId] = useState(1);
   const cartItem = cart?.find((item) => item.productID === product.productID);
 
@@ -28,11 +27,9 @@ function CartProduct({ product, send }) {
       UnitPrice: cartItem?.price * cartItem?.quantity,
     },
   ];
-
+	
+  console.log(OrderDetail);
   useEffect(() => {
-    axios
-      .post(" http://localhost:3016/admin", { email })
-      .then((response) => setUserId(response.data.data[0].userId));
     send &&
       axios
         .post(`http://localhost:5016/add-order?userId=${userId}`, {

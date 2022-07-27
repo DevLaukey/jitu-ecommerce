@@ -48,7 +48,7 @@ function BookMarkItems({ product }) {
             <button
 							onClick={addItems}
 							disabled
-              className="py-1 cursor-not-allowed px-2 bg-gray-600 text-white text-sm capitalize rounded-md  "
+              className="py-1 px-2 bg-gray-600 text-white text-sm capitalize rounded-md hover:bg-blue-800 "
             >
               Buy now
             </button>

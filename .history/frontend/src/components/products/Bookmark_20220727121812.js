@@ -10,17 +10,15 @@ console.log(favorites.length);
     <div class="shadow-md max-w-3xl m-auto w-full">
       <div class="bg-white px-10 py-10 items-center">
         <div class="flex w-full justify-between border-b pb-8">
-          <h1 class="font-semibold text-xl">
-          
-           { favorites.length == 0 && 'No'}Things to In the Bookmark
-          </h1>
-          <h2 class="font-semibold text-xl">
+				  <h1 class="font-semibold text-xl">Things to buy</h1>
+				  {favorites.length > 0 ? (<><h2 class="font-semibold text-xl">
             {favorites.reduce((acc, item) => acc + 1, 0)} Items
           </h2>
         </div>
         {favorites.map((item) => (
           <BookMarkItems product={item} key={item.productID} />
-        ))}
+        ))}</>):(<p>No Bookmarks</p>)}
+          
       </div>
     </div>
   );

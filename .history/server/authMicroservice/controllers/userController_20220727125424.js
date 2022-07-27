@@ -12,12 +12,12 @@ module.exports = {
     try {
       await exec("verify_exists", {
         email,
-      }).then(response => {
+      }).then((response) => {
         console.log(response.recordset);
         return res.status(200).json({
           status: 200,
           success: true,
-          data: response.recordset,
+          record: response.recordset,
         });
       });
     } catch (error) {
