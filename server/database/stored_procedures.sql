@@ -112,6 +112,13 @@ BEGIN
 END
 GO
 
+CREATE OR ALTER PROCEDURE [dbo].[fetch_category]
+    @catId INT
+AS
+BEGIN
+    SELECT * FROM categories WHERE categoryId = @catId
+END
+GO
 -- Stored procedures for products
 
 CREATE OR ALTER PROCEDURE [dbo].[all_products]
@@ -363,3 +370,5 @@ BEGIN
 
 END
 
+
+select * from categories

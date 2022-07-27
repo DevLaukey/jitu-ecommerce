@@ -3,7 +3,7 @@ require("dotenv").config();
 
 const dbConfig = {
 	user: "SA",
-	password:"mburu.2924",
+	password: "password",
 	database: "tangarine_furniture",
 	server: "localhost",
 	pool: {
