@@ -13,7 +13,6 @@ function Cart() {
 	const checkoutHere = (e) => {
 		e.preventDefault();
 		loggedIn ? setSend(true) : navigate("/login");
-		console.log("checkout");
 	};
 
 	return (

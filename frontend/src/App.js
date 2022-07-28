@@ -9,7 +9,6 @@ import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 
 import { loadCategories, loadProducts } from "./redux/slices/productReducer";
-import useToken from "./useToken";
 
 import AdminWrapper from "./pages/AdminWrapper";
 import DashBoard from "./components/admin/Main";
@@ -29,55 +28,55 @@ import ProductDetails from "./components/products/ProductDetails";
 import ProductGrid from "./components/products/productGrid";
 
 import Error from "./components/Error";
-import ModalEditCat from "./components/admin/ModalEditCat";
+import { loginUser } from "./redux/slices/userReducer";
 
 const App = () => {
-	const dispatch = useDispatch();
+  const dispatch = useDispatch();
 
-	const { token, setToken } = useToken();
+  const user = JSON.parse(localStorage.getItem("token"));
+  user?.email && dispatch(loginUser(user.email));
+  let { isAdmin } = useSelector((state) => state.user);
+  const baseURL = "http://localhost:3005";
+	// let token = user.token;
+  useEffect(() => {
+    axios.get(`${baseURL}/categories`).then((response) => {
+      dispatch(loadCategories(response.data.categories));
+    });
+    axios.get(`${baseURL}/products`).then((response) => {
+      dispatch(loadProducts(response.data.records));
+    });
+  }, [dispatch]);
 
-	let { isAdmin } = useSelector((state) => state.user);
-	const baseURL = "http://localhost:3005";
+  return (
+    <Router>
+      <ToastContainer />
+      <Navbar />
+      <Routes>
+        {isAdmin ? (
+          <Route path="/" element={<AdminWrapper />}>
+            <Route path="/" element={<DashBoard />} />
+            <Route path="admin/customers" element={<Customers />} />
+            <Route path="admin/products" element={<Products />} />
+            <Route path="admin/categories" element={<Categories />} />
+            <Route path="admin/orders" element={<Orders />} />
+            <Route path="admin/settings" element={<Settings />} />
+          </Route>
+        ) : (
+          <>
+            <Route path="/" element={<ProductGrid />} />
+            <Route path="/cart" element={<Cart token={user?.token} />} />
+            <Route path="/products/:productName" element={<ProductDetails />} />
+            <Route path="/bookmark" element={<Bookmark />} />
+          </>
+        )}
+        <Route path="/login" element={<Login token={user?.token} />} />
+        <Route path="/signup" element={<SignUp token={user?.token} />} />
 
-	useEffect(() => {
-		axios.get(`${baseURL}/categories`).then((response) => {
-			dispatch(loadCategories(response.data.categories));
-		});
-		axios.get(`${baseURL}/products`).then((response) => {
-			dispatch(loadProducts(response.data.records));
-		});
-	}, [dispatch]);
-
-	return (
-		<Router>
-			<ToastContainer />
-			<Navbar />
-			<Routes>
-				{isAdmin ? (
-					<Route path="/" element={<AdminWrapper />}>
-						<Route path="/" element={<DashBoard />} />
-						<Route path="admin/customers" element={<Customers />} />
-						<Route path="admin/products" element={<Products />} />
-						<Route path="admin/categories" element={<Categories />} />
-						<Route path="admin/orders" element={<Orders />} />
-						<Route path="admin/settings" element={<Settings />} />
-					</Route>
-				) : (
-					<>
-						<Route path="/" element={<ProductGrid />} />
-						<Route path="/cart" element={<Cart token={token} />} />
-						<Route path="/products/:productName" element={<ProductDetails />} />
-						<Route path="/bookmark" element={<Bookmark />} />
-					</>
-				)}
-				<Route path="/login" element={<Login setToken={setToken} />} />
-				<Route path="/signup" element={<SignUp setToken={setToken} />} />
-
-				<Route path="*" element={<Error />} />
-			</Routes>
-			<Footer />
-		</Router>
-	);
+        <Route path="*" element={<Error />} />
+      </Routes>
+      <Footer />
+    </Router>
+  );
 };
 
 export default App;
