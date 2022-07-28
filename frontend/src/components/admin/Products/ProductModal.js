@@ -2,7 +2,7 @@ import axios from "axios";
 import React, { useState } from "react";
 import { toast } from "react-toastify";
 
-const ProductModal = ({ setShowModal }) => {
+const ProductModal = ({ setAddModal }) => {
   const [inputs, setInputs] = useState({});
   const baseURL = "http://localhost:3005";
 
@@ -28,7 +28,7 @@ const ProductModal = ({ setShowModal }) => {
       toast.success("Product added successfully !", {
         position: toast.POSITION.TOP_RIGHT,
       });
-      setShowModal(false);
+      setAddModal(false);
     } catch (error) {
       console.log(error.response.data.message);
       toast.error(error.response.data.message, {
@@ -113,8 +113,8 @@ const ProductModal = ({ setShowModal }) => {
               />
             </div>
             <div className="flex justify-between w-full">
-              <button
-                onClick={() => setShowModal(false)}
+              <p
+                onClick={() => setAddModal(false)}
                 className="flex justify-center gap-x-1.5 items-center px-6 py-2 my-3 text-center text-white rounded bg-blue-600 hover:bg-rose-600 focus:bg-rose-600 font-light"
               >
                 <svg
@@ -130,7 +130,7 @@ const ProductModal = ({ setShowModal }) => {
                   />
                 </svg>
                 Close
-              </button>
+              </p>
               <button
                 type="submit"
                 className="px-6 py-2 my-3 text-center text-white rounded bg-blue-600 hover:bg-green-600 focus:bg-green-600 font-light"
