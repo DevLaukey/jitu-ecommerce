@@ -9,6 +9,6 @@ router.post("/signup", signup);
 router.post("/admin", makeAdmin);
 
 router.post("/signin", signin);
-router.post("/update", isAuthenticated, updateUser);
+router.post("/update", updateUser);
 
 module.exports = router;

@@ -13,10 +13,10 @@ import useToken from "./useToken";
 
 import AdminWrapper from "./pages/AdminWrapper";
 import DashBoard from "./components/admin/Main";
-import Customers from "./components/admin/Customers";
-import Products from "./components/admin/Products";
-import Categories from "./components/admin/Categories";
-import Orders from "./components/admin/Order";
+import Customers from "./components/admin/Customers/Customers";
+import Products from "./components/admin/Products/Products";
+import Categories from "./components/admin/Categories/Categories";
+import Orders from "./components/admin/Orders/Order";
 import Settings from "./components/admin/Settings";
 
 import Cart from "./components/products/Cart";
@@ -29,6 +29,7 @@ import ProductDetails from "./components/products/ProductDetails";
 import ProductGrid from "./components/products/productGrid";
 
 import Error from "./components/Error";
+import ModalEditCat from "./components/admin/ModalEditCat";
 
 const App = () => {
 	const dispatch = useDispatch();
