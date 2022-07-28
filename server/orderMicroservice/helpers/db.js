@@ -2,9 +2,9 @@ const sql = require("mssql");
 require("dotenv").config();
 
 const dbConfig = {
-  user: process.env.DB_USER || "SA",
-  password: process.env.DB_PWD || "password " || "mburu.2924",
-  database: process.env.DB_NAME || "tangarine_furniture",
+  user: process.env.DB_USER,
+  password: process.env.DB_PWD ,
+  database: process.env.DB_NAME,
   server: "localhost",
   port: 1433,
   pool: {
