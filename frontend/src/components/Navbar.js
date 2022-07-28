@@ -46,7 +46,6 @@ function Navbar() {
 					</div>{" "}
 				</Link>
 			</div>
-			{/* <div className="flex items-center justify-center"> */}
 			{!isAdmin && (
 				<div className="input-group flex items-items justify-center">
 					<input

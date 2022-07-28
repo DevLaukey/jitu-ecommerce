@@ -1,8 +1,9 @@
 /* eslint-disable jsx-a11y/img-redundant-alt */
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import ProductEdit from "./ProductEdit";
+import ProductEdit from "../Products/ProductEdit";
 import AddCategory from "./AddCategory";
+import EditCategory from "./EditCategory";
 
 const baseURL = "http://localhost:3005";
 
@@ -10,15 +11,17 @@ const Categories = () => {
 	const [categories, setCategories] = useState(null);
 	const [showModal, setShowModal] = useState(false);
 	const [viewModal, setViewModal] = useState(false);
+	const [editModal, setEditModal] = useState(false);
+
 	const [searchInput, setSearchInput] = useState("");
-	const [productID, setProductID] = useState();
+	const [categoryID, setcategoryID] = useState();
 	const [user, setUser] = useState("");
 	useEffect(() => {
 		setCategories(null);
 		axios.get(`${baseURL}/categories`).then((response) => {
 			setCategories(response.data.categories);
 		});
-	}, [searchInput, user, productID, viewModal, showModal]);
+	}, [searchInput, user, categoryID, viewModal, showModal]);
 	return (
 		<>
 			<div className="m-4 relative  w-full">
@@ -43,7 +46,8 @@ const Categories = () => {
 					</div>
 				</div>
 				{showModal && <AddCategory setShowModal={setShowModal} />}
-				{viewModal && <ProductEdit setViewModal={setViewModal} user={user} proddId={productID} />}
+				<EditCategory visible={editModal} onClose={() => setEditModal(false)} />
+				{/* {viewModal && <EditCategory setViewModal={setViewModal} user={user} proddId={categoryID} />} */}
 				<div className="flex flex-col">
 					<div className="overflow-x-auto sm:-mx-6 lg:-mx-8 max-w-full">
 						<div className="py-2 inline-block min-w-full sm:px-6 lg:px-8">
@@ -120,7 +124,7 @@ const Categories = () => {
 									<tbody>
 										{categories
 											? categories.map((category, index) => (
-													<tr key={category.productId} className="border-b">
+													<tr key={category.categoryID} className="border-b">
 														<td className="px-3 py-3 whitespace-nowrap text-sm font-medium text-gray-900">
 															{index + 1}
 														</td>
@@ -132,9 +136,9 @@ const Categories = () => {
 														<td className="text-sm text-zinc-900 font-light px-3 whitespace-nowrap">
 															<p
 																onClick={() => {
-																	setViewModal(true);
+																	setEditModal(true);
 																	setUser(category.categoryName);
-																	setProductID(category.productID);
+																	setcategoryID(category.categoryID);
 																}}
 																className="hover:cursor-pointer mr-3 inline-block px-4 py-1 bg-blue-500 text-white font-medium text-xs leading-loose uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-md transition duration-150 ease-in-out">
 																Edit
